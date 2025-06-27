@@ -144,4 +144,179 @@
                     </div>
                      <div class="card">
                         <div class="card-header"><i class="fa-solid fa-water"></i><span>Su Hacmi Bilgisi</span></div>
-                        <p>Temel birim dö
+                        <p>Temel birim dönüşümü:</p>
+                        <div class="sensor-value">1L = 0.001 m³</div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="graphs" class="content-section">
+                <h2 class="section-title">Anlık Grafikler</h2>
+                <div class="grid-container">
+                    <div class="card"><div class="card-header"><i class="fas fa-sun"></i><span>Işık Şiddeti</span></div><div class="card-body"><div class="sensor-value" id="light-value">--</div><div class="chart-container"><canvas id="light-chart"></canvas></div></div></div>
+                    <div class="card"><div class="card-header"><i class="fas fa-tint"></i><span>Toprak Nemi</span></div><div class="card-body"><div class="sensor-value" id="humidity-value">--</div><div class="chart-container"><canvas id="humidity-chart"></canvas></div></div></div>
+                    <div class="card"><div class="card-header"><i class="fas fa-thermometer-half"></i><span>Ortam Sıcaklığı</span></div><div class="card-body"><div class="sensor-value" id="temperature-value">--</div><div class="chart-container"><canvas id="temperature-chart"></canvas></div></div></div>
+                    <div class="card"><div class="card-header"><i class="fas fa-wind"></i><span>Hava Kalitesi</span></div><div class="card-body"><div class="sensor-value" id="air-quality-value">--</div><div class="chart-container"><canvas id="air-quality-chart"></canvas></div></div></div>
+                </div>
+            </section>
+
+            <section id="how-to" class="content-section info-page">
+                <h2 class="section-title">Nasıl Kullanılır?</h2>
+                <h3>Projenin Amacı</h3>
+                <p>Bu proje, iklim değişikliği ve yoğun kentleşmenin neden olduğu su yönetimi sorunları, hava kirliliği ve ısı adası etkisi gibi problemlere karşı; mikroalgler ve akıllı sensörlerle donatılmış yenilikçi bir yağmur bahçesi çözümü sunmayı amaçlamaktadır. Hedefimiz, şehirlerimizi daha yaşanabilir, ekolojik ve sürdürülebilir hale getirmektir.</p>
+                <h3>Uygulamanın Kullanımı</h3>
+                <ul>
+                    <li><b>Genel Bakış:</b> Sistem hakkında temel bilgileri ve önemli metrikleri sunar.</li>
+                    <li><b>Anlık Grafikler:</b> Işık, nem, sıcaklık ve hava kalitesi sensörlerinden gelen verilerin zaman içindeki değişimini canlı olarak izleyebilirsiniz.</li>
+                    <li><b>Bluetooth Terminal:</b> Üst menüdeki Bluetooth simgesine tıklayarak, sisteme ait ham verileri ve log kayıtlarını görebileceğiniz mobil terminal bölümüne ulaşırsınız.</li>
+                </ul>
+                <h3>Biyoreaktörler ve Mikroalgler</h3>
+                <p>Sistemimizin kalbinde, oksijen üreten mikroalgleri barındıran biyoreaktörler yer alır. Mikroalgler, fotosentez yoluyla havadaki karbondioksiti tüketir ve yerine temiz oksijen salar. Bu, onları kentsel hava kalitesini iyileştirmek için güçlü bir doğal araca dönüştürür.</p>
+                <div class="info-images">
+                    <img src="https://i.imgur.com/Wp2b8hU.jpg" alt="Biyoreaktördeki Mikroalgler">
+                    <img src="https://i.imgur.com/9nOE48c.jpg" alt="Yağmur Bahçesi Çalışma Prensibi">
+                    <img src="https://i.imgur.com/gK98tA4.jpg" alt="Açık Hava Biyoreaktörleri">
+                </div>
+            </section>
+
+            <section id="about" class="content-section info-page">
+                <h2 class="section-title">Projenin Amaç ve Hedefleri</h2>
+                <p>ECOSCYCLE projesi, günümüzün en büyük çevresel sorunlarına yenilikçi ve sürdürülebilir bir çözüm sunmak üzere geliştirilmiştir. Projemizin ana hedefleri şunlardır:</p>
+                <ul>
+                    <li><b>Şehirlerde Su Yönetimini İyileştirmek:</b> Yağmur suyunu kontrollü bir şekilde toplayarak, arıtarak ve yeniden kullanarak sel riskini azaltmak ve su kaynaklarında verimlilik sağlamak.</li>
+                    <li><b>Hava Kirliliğini Azaltmak:</b> Mikroalglerin fotosentetik gücünden faydalanarak havadaki karbon emisyonlarını düşürmek ve kentsel alanlarda oksijen üretimini artırarak daha sağlıklı yaşam alanları oluşturmak.</li>
+                    <li><b>Akıllı ve Otomatik Kontrol Sağlamak:</b> IoT sensörleri ile toprak nemi, su akışı ve hava kalitesi gibi kritik verileri anlık olarak takip edip, sistemi en verimli şekilde otomatik olarak yönetmek.</li>
+                    <li><b>Yeşil Altyapıyı Güçlendirmek:</b> Kentsel biyoçeşitliliği korumak, şehirlerin ekolojik direncini artırmak ve doğayla uyumlu, sürdürülebilir kalkınma hedeflerine ulaşmayı teşvik etmek.</li>
+                </ul>
+            </section>
+            
+            <section id="terminal" class="content-section">
+                 <div class="terminal-header">
+                    <div class="terminal-title">ECO-S-ELNSOR // MOBIL TERMINAL</div>
+                </div>
+                <pre id="terminal-output"></pre>
+            </section>
+        </main>
+    </div>
+
+    <!-- BLUETOOTH BAĞLANTI EKRANI -->
+    <div id="bluetooth-connecting-overlay">
+        <i class="fa-brands fa-bluetooth-b bt-spinner"></i>
+        <p>Mobil Terminale Bağlanılıyor...</p>
+    </div>
+
+    <!-- YUKARI ÇIK BUTONU -->
+    <a href="#overview" id="back-to-top-btn"><i class="fa-solid fa-arrow-up"></i></a>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const contentSections = document.querySelectorAll('.content-section');
+        const btConnectingOverlay = document.getElementById('bluetooth-connecting-overlay');
+        const btTerminalBtn = document.getElementById('bluetooth-terminal-btn');
+        const backToTopBtn = document.getElementById('back-to-top-btn');
+        const mainContentArea = document.querySelector('.main-container');
+
+        // Navigasyon linklerine tıklandığında aktif sınıfı yönetme
+        navLinks.forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(link.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Kaydırma olayını dinleyerek aktif sekmeyi belirleme
+        function onScroll() {
+            let currentSection = '';
+            contentSections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (mainContentArea.scrollTop >= sectionTop - 150) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+            
+             // Yukarı Çık butonu görünürlüğü
+            if (mainContentArea.scrollTop > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        }
+        mainContentArea.addEventListener('scroll', onScroll);
+
+        // Bluetooth Terminal Akışı
+        btTerminalBtn.addEventListener('click', () => {
+            btConnectingOverlay.classList.add('active');
+            setTimeout(() => {
+                btConnectingOverlay.classList.remove('active');
+                document.getElementById('terminal').scrollIntoView({ behavior: 'smooth' });
+            }, 2500);
+        });
+
+        // Dashboard'u başlatan ana fonksiyon
+        function initializeDashboard() {
+            const lightValueEl = document.getElementById('light-value');
+            const humidityValueEl = document.getElementById('humidity-value');
+            const temperatureValueEl = document.getElementById('temperature-value');
+            const airQualityValueEl = document.getElementById('air-quality-value');
+            const terminalOutput = document.getElementById('terminal-output');
+            const CHART_DATA_COUNT = 15;
+            let chartInstances = {};
+
+            function createChart(ctx, color) { return new Chart(ctx, { type: 'line', data: { labels: [], datasets: [{ data: [], borderColor: color, borderWidth: 2.5, fill: true, backgroundColor: 'rgba(255,255,255,0.05)', tension: 0.4, pointRadius: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } } }); }
+            
+            chartInstances.light = createChart(document.getElementById('light-chart').getContext('2d'), '#f1c40f');
+            chartInstances.humidity = createChart(document.getElementById('humidity-chart').getContext('2d'), '#3498db');
+            chartInstances.temperature = createChart(document.getElementById('temperature-chart').getContext('2d'), '#e74c3c');
+            chartInstances.airQuality = createChart(document.getElementById('air-quality-chart').getContext('2d'), '#9b59b6');
+            
+            function updateChart(chart, label, newData) {
+                if(!chart) return;
+                chart.data.labels.push(label);
+                chart.data.datasets[0].data.push(newData);
+                if (chart.data.labels.length > CHART_DATA_COUNT) {
+                    chart.data.labels.shift();
+                    chart.data.datasets[0].data.shift();
+                }
+                chart.update('none');
+            }
+
+            function simulateSensorData() { return { light: Math.floor(Math.random() * 1000), humidity: Math.floor(Math.random() * 101), temperature: Math.floor(Math.random() * 45), airQuality: Math.floor(Math.random() * 1000) + 50 }; }
+            function writeToTerminal(message) { terminalOutput.innerHTML += message + '\n'; terminalOutput.scrollTop = terminalOutput.scrollHeight; }
+
+            function updateAll() {
+                const data = simulateSensorData();
+                const now = new Date();
+                const timeLabel = `${now.getHours()}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+
+                lightValueEl.innerHTML = `${data.light}<span class="unit">lux</span>`;
+                updateChart(chartInstances.light, timeLabel, data.light);
+                humidityValueEl.innerHTML = `${data.humidity}<span class="unit">%</span>`;
+                updateChart(chartInstances.humidity, timeLabel, data.humidity);
+                temperatureValueEl.innerHTML = `${data.temperature}<span class="unit">°C</span>`;
+                updateChart(chartInstances.temperature, timeLabel, data.temperature);
+                airQualityValueEl.innerHTML = `${data.airQuality}<span class="unit">PPM</span>`;
+                updateChart(chartInstances.airQuality, timeLabel, data.airQuality);
+                writeToTerminal(`<span style="color:#888">[${timeLabel}]</span> Işık: ${data.light} lux, Nem: ${data.humidity}%, Sıcaklık: ${data.temperature}°C, Hava Kalitesi: ${data.airQuality} PPM`);
+            }
+            
+            setInterval(updateAll, 3000);
+            updateAll();
+            writeToTerminal("ECO-S-ELNSOR Mobil Terminal v3.0 başlatılıyor...");
+            writeToTerminal("Sistem logları dinleniyor...");
+        }
+        initializeDashboard();
+    });
+    </script>
+</body>
+</html>
