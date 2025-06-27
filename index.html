@@ -15,30 +15,19 @@
     <style>
         :root {
             --primary-color: #27ae60; --warning-color: #f39c12; --critical-color: #e74c3c;
-            --light-theme-bg: #f7fdf9; 
-            --dark-text: #34495e;
-            --card-bg: rgba(255, 255, 255, 0.7);
-            --card-shadow: rgba(0, 0, 0, 0.1);
-            --nav-bg: #ffffff; 
-            --nav-text-color: #34495e; 
-            --info-color: #3498db;
-            --border-color: rgba(0, 0, 0, 0.1);
+            --light-theme-bg: #f7fdf9; --dark-text: #34495e; --card-bg: rgba(255, 255, 255, 0.7);
+            --card-shadow: rgba(0, 0, 0, 0.1); --nav-bg: #ffffff; --nav-text-color: #34495e; 
+            --info-color: #3498db; --border-color: rgba(0, 0, 0, 0.1);
         }
         *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body, html {
             margin: 0; padding: 0; font-family: 'Poppins', sans-serif; height: 100%;
-            overflow-x: hidden; color: var(--dark-text);
-            background-color: #e6f9f0;
+            overflow-x: hidden; color: var(--dark-text); background-color: #e6f9f0;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,128L48,138.7C96,149,192,171,288,170.7C384,171,480,149,576,122.7C672,96,768,64,864,80C960,96,1056,160,1152,176C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: top;
-            background-size: 100% 400px;
+            background-repeat: no-repeat; background-position: top; background-size: 100% 400px;
         }
-
         .main-container { display: flex; flex-direction: column; height: 100vh; background-color: transparent; }
-
-        /* ÜST NAVİGASYON BARI */
         .top-nav { display: flex; align-items: center; padding: 0 30px; background-color: var(--nav-bg); border-bottom: 1px solid var(--border-color); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 10px var(--card-shadow); }
         .logo-container { display: flex; align-items: center; gap: 15px; }
         .logo-container img { width: 45px; height: auto; }
@@ -51,12 +40,11 @@
         .top-nav-actions { display: flex; align-items: center; gap: 20px; }
         .action-btn { background: none; border: none; color: var(--nav-text-color); font-size: 1.5em; cursor: pointer; transition: color 0.3s; opacity: 0.8; }
         .action-btn:hover { color: var(--primary-color); opacity: 1; }
-
-        /* ANA İÇERİK ALANI */
         .content-area { padding: 30px; padding-top: 100px; }
         .content-section { min-height: 90vh; padding: 50px 0; border-bottom: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: center; }
         .content-section:last-child { border-bottom: none; }
         .section-title { font-size: 2.5em; color: var(--primary-color); text-align: center; margin-bottom: 40px; }
+        .section-title small { font-size: 0.6em; color: var(--dark-text); opacity: 0.7; display: block; margin-top: 5px; }
         .overview-layout { display: flex; align-items: center; gap: 50px; width: 100%; max-width: 1200px; margin: 0 auto; }
         .overview-info { flex: 1.2; }
         .overview-info .section-title { text-align: left; font-size: 3em; }
@@ -64,7 +52,6 @@
         .overview-image { flex: 1; text-align: center; }
         .overview-image img { max-width: 100%; height: auto; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
         .overview-info .card { background-color: var(--card-bg); backdrop-filter: blur(5px); }
-        
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
         .card { background-color: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px var(--card-shadow); backdrop-filter: blur(10px); }
         .card-header { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.2em; font-weight: 600; }
@@ -72,32 +59,24 @@
         .sensor-value { font-size: 2.5em; font-weight: 700; text-align: center; }
         .sensor-value .unit { font-size: 0.5em; font-weight: 400; margin-left: 5px; }
         .chart-container { position: relative; height: 120px; margin-top: 20px; }
-
         .info-page h3 { color: var(--info-color); margin-top: 30px; }
         .info-page p { line-height: 1.7; text-align: justify; opacity: 0.9; }
         .info-page ul { list-style-type: none; padding-left: 0; }
         .info-page ul li { background-color: rgba(255,255,255,0.5); margin-bottom: 10px; padding: 15px; border-left: 4px solid var(--primary-color); border-radius: 5px; }
         .info-images { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; justify-content: center; align-items: center; }
         .info-images .svg-container { width: 100%; max-width: 280px; height: 200px; padding:15px; background-color:rgba(255,255,255,0.5); border-radius:10px;}
-
-        /* HAVA DURUMU & RİSK BÖLÜMÜ */
-        .weather-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; align-items: stretch; }
-        .weather-card { text-align: center; }
-        #weather-icon { font-size: 5em; margin: 10px 0; }
-        #temperature { font-size: 4em; font-weight: 700; }
-        #weather-description { font-size: 1.2em; opacity: 0.8; text-transform: capitalize; }
-        .weather-details { display: flex; justify-content: space-around; margin-top: 20px; }
-        .weather-detail-item { font-size: 0.9em; }
-        .weather-detail-item i { margin-right: 5px; }
         
-        .gauge-container { position: relative; width: 250px; height: 125px; margin: 20px auto 0 auto; overflow: hidden; }
-        .gauge-semi-circle { position: absolute; top: 0; left: 0; width: 250px; height: 250px; border: 20px solid #eee; border-radius: 50%; border-bottom-color: transparent; border-right-color: transparent; transform: rotate(-45deg); }
-        .gauge-mask { position: absolute; top: 0; left: 0; width: 250px; height: 125px; background: var(--card-bg); }
-        .gauge-needle { position: absolute; bottom: 0; left: 50%; width: 2px; height: 125px; background: var(--dark-text); transform-origin: bottom center; transition: transform 0.5s ease; }
-        #risk-value { font-size: 2.5em; font-weight: 700; margin-top: -60px; z-index: 1; position: relative; }
-        #risk-text { font-size: 1.1em; opacity: 0.8; z-index: 1; position: relative; }
+        /* HAVA DURUMU & RİSK BÖLÜMÜ */
+        .risk-gauges-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; align-items: stretch; margin-top: 30px; }
+        .gauge-card { text-align: center; padding: 20px; }
+        .gauge-container { position: relative; width: 180px; height: 90px; margin: 20px auto 0 auto; overflow: hidden; }
+        .gauge-semi-circle { position: absolute; top: 0; left: 0; width: 180px; height: 180px; border: 20px solid #eee; border-radius: 50%; border-bottom-color: transparent; border-right-color: transparent; transform: rotate(-45deg); }
+        .gauge-mask { position: absolute; top: 0; left: 0; width: 180px; height: 90px; background: var(--card-bg); }
+        .gauge-needle { position: absolute; bottom: 0; left: 50%; width: 2px; height: 90px; background: var(--dark-text); transform-origin: bottom center; transition: transform 0.5s ease; }
+        .gauge-value { font-size: 2em; font-weight: 700; margin-top: -50px; z-index: 1; position: relative; }
+        .gauge-text { font-size: 1em; opacity: 0.8; z-index: 1; position: relative; }
+        .gauge-card .card-header { justify-content: center; font-size: 1.1em;}
 
-        /* BLUETOOTH & TERMINAL */
         #bluetooth-connecting-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; }
         #bluetooth-connecting-overlay.active { display: flex; }
         .bt-spinner { font-size: 5em; color: var(--info-color); animation: pulse 1.5s infinite; }
@@ -108,7 +87,6 @@
         .terminal-title { font-size: 1.5em; color: var(--primary-color); text-shadow: 0 0 5px var(--primary-color); }
         #terminal-output { height: 400px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; font-family: 'Source Code Pro', monospace; color: #00ff00; }
         #terminal-output::-webkit-scrollbar { width: 8px; } #terminal-output::-webkit-scrollbar-track { background: #222; } #terminal-output::-webkit-scrollbar-thumb { background: var(--primary-color); }
-
         #back-to-top-btn { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background-color: var(--primary-color); color: white; border: none; border-radius: 50%; font-size: 1.5em; cursor: pointer; display: none; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: opacity 0.3s, transform 0.3s; z-index: 999; }
         #back-to-top-btn.visible { display: flex; opacity: 1; }
         
@@ -129,7 +107,7 @@
                 <a href="#graphs" class="nav-link">Anlık Veri Takibi</a>
                 <a href="#how-to" class="nav-link">Nasıl Kullanılır?</a>
                 <a href="#about" class="nav-link">Hakkımızda</a>
-                <a href="#weather" class="nav-link">Hava Durumu</a>
+                <a href="#weather" class="nav-link">Bölgesel Risk Analizi</a>
             </nav>
             <div class="top-nav-actions">
                 <button id="bluetooth-terminal-btn" class="action-btn"><i class="fa-brands fa-bluetooth-b"></i></button>
@@ -167,8 +145,6 @@
 
             <section id="how-to" class="content-section info-page">
                 <h2 class="section-title">Nasıl Kullanılır?</h2>
-                <h3>Projenin Amacı</h3>
-                <p>Bu proje, iklim değişikliği ve yoğun kentleşmenin neden olduğu su yönetimi sorunları, hava kirliliği ve ısı adası etkisi gibi problemlere karşı; mikroalgler ve akıllı sensörlerle donatılmış yenilikçi bir yağmur bahçesi çözümü sunmayı amaçlamaktadır. Hedefimiz, şehirlerimizi daha yaşanabilir, ekolojik ve sürdürülebilir hale getirmektir.</p>
                 <h3>Biyoreaktörler ve Mikroalgler</h3>
                 <p>Sistemimizin kalbinde, oksijen üreten mikroalgleri barındıran biyoreaktörler yer alır. Mikroalgler, fotosentez yoluyla havadaki karbondioksiti tüketir ve yerine temiz oksijen salar. Bu, onları kentsel hava kalitesini iyileştirmek için güçlü bir doğal araca dönüştürür.</p>
                 <div class="info-images">
@@ -183,7 +159,6 @@
 
             <section id="about" class="content-section info-page">
                 <h2 class="section-title">Projenin Amaç ve Hedefleri</h2>
-                <p>ECOSCYCLE projesi, günümüzün en büyük çevresel sorunlarına yenilikçi ve sürdürülebilir bir çözüm sunmak üzere geliştirilmiştir. Projemizin ana hedefleri şunlardır:</p>
                 <ul>
                     <li><b>Şehirlerde Su Yönetimini İyileştirmek:</b> Yağmur suyunu kontrollü bir şekilde toplayarak, arıtarak ve yeniden kullanarak sel riskini azaltmak ve su kaynaklarında verimlilik sağlamak.</li>
                     <li><b>Hava Kirliliğini Azaltmak:</b> Mikroalglerin fotosentetik gücünden faydalanarak havadaki karbon emisyonlarını düşürmek ve kentsel alanlarda oksijen üretimini artırarak daha sağlıklı yaşam alanları oluşturmak.</li>
@@ -193,29 +168,31 @@
             </section>
 
              <section id="weather" class="content-section">
-                <h2 class="section-title">İstanbul, Başakşehir<br>Hava Durumu & Risk Analizi</h2>
-                <div class="weather-grid">
-                    <div class="card weather-card">
-                        <i id="weather-icon" class="fas fa-sun"></i>
-                        <div id="temperature">--°C</div>
-                        <div id="weather-description">--</div>
+                <h2 class="section-title" id="weather-location-title">Bölgesel Risk Analizi <small>Konum verisi bekleniyor...</small></h2>
+                <div class="risk-gauges-grid">
+                    <!-- Sel Riski Göstergesi -->
+                    <div class="card gauge-card">
+                        <div class="card-header"><i class="fas fa-cloud-showers-heavy"></i><span>Sel Riski</span></div>
+                        <div class="gauge-container"><div class="gauge-semi-circle"></div><div class="gauge-needle" id="gauge-flood"></div><div class="gauge-mask"></div></div>
+                        <div class="gauge-value" id="value-flood">--%</div><div class="gauge-text" id="text-flood">--</div>
                     </div>
-                    <div class="card">
-                         <div class="card-header"><i class="fas fa-info-circle"></i><span>Detaylar</span></div>
-                         <div class="weather-details">
-                             <div class="weather-detail-item"><i class="fas fa-tint"></i><span id="weather-humidity">--%</span></div>
-                             <div class="weather-detail-item"><i class="fas fa-wind"></i><span id="weather-wind">-- m/s</span></div>
-                         </div>
+                    <!-- Kuraklık Riski Göstergesi -->
+                    <div class="card gauge-card">
+                        <div class="card-header"><i class="fas fa-sun-plant-wilt"></i><span>Kuraklık Riski</span></div>
+                        <div class="gauge-container"><div class="gauge-semi-circle"></div><div class="gauge-needle" id="gauge-drought"></div><div class="gauge-mask"></div></div>
+                        <div class="gauge-value" id="value-drought">--%</div><div class="gauge-text" id="text-drought">--</div>
                     </div>
-                    <div class="card weather-card">
-                        <div class="card-header"><i class="fas fa-cloud-showers-heavy"></i><span>Sel Riski İndeksi</span></div>
-                        <div class="gauge-container">
-                            <div class="gauge-semi-circle"></div>
-                            <div class="gauge-needle" id="gauge-needle"></div>
-                            <div class="gauge-mask"></div>
-                        </div>
-                        <div id="risk-value">--</div>
-                        <div id="risk-text">--</div>
+                    <!-- Nem Doygunluğu Göstergesi -->
+                    <div class="card gauge-card">
+                        <div class="card-header"><i class="fas fa-tint"></i><span>Nem Doygunluğu</span></div>
+                        <div class="gauge-container"><div class="gauge-semi-circle"></div><div class="gauge-needle" id="gauge-humidity"></div><div class="gauge-mask"></div></div>
+                        <div class="gauge-value" id="value-humidity">--%</div><div class="gauge-text" id="text-humidity">--</div>
+                    </div>
+                    <!-- Oksijen Seviyesi Göstergesi -->
+                    <div class="card gauge-card">
+                        <div class="card-header"><i class="fas fa-lungs"></i><span>Oksijen Seviyesi</span></div>
+                        <div class="gauge-container"><div class="gauge-semi-circle"></div><div class="gauge-needle" id="gauge-oxygen"></div><div class="gauge-mask"></div></div>
+                        <div class="gauge-value" id="value-oxygen">--%</div><div class="gauge-text" id="text-oxygen">--</div>
                     </div>
                 </div>
             </section>
@@ -238,6 +215,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // Genel Elementler
         const navLinks = document.querySelectorAll('.nav-link');
         const contentSections = document.querySelectorAll('.content-section');
         const btConnectingOverlay = document.getElementById('bluetooth-connecting-overlay');
@@ -245,8 +223,8 @@
         const backToTopBtn = document.getElementById('back-to-top-btn');
         const mainContentArea = document.querySelector('.main-container');
 
+        // Navigasyon ve Kaydırma İşlemleri
         navLinks.forEach(link => { link.addEventListener('click', e => { e.preventDefault(); document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' }); }); });
-
         function onScroll() {
             let currentSectionId = '';
             contentSections.forEach(section => { if (mainContentArea.scrollTop >= section.offsetTop - 150) { currentSectionId = section.getAttribute('id'); } });
@@ -255,6 +233,7 @@
         }
         mainContentArea.addEventListener('scroll', onScroll);
 
+        // Terminal Akışı
         btTerminalBtn.addEventListener('click', () => {
             btConnectingOverlay.classList.add('active');
             setTimeout(() => {
@@ -263,8 +242,9 @@
             }, 2500);
         });
 
+        // Dashboard'u başlatan ana fonksiyon
         function initializeDashboard() {
-            // Sensörler ve Grafikler
+            // Sensör Grafikleri
             const lightValueEl = document.getElementById('light-value'), humidityValueEl = document.getElementById('humidity-value'), temperatureValueEl = document.getElementById('temperature-value'), airQualityValueEl = document.getElementById('air-quality-value'), terminalOutput = document.getElementById('terminal-output'), CHART_DATA_COUNT = 15;
             let chartInstances = {};
             function createChart(ctx, color) { return new Chart(ctx, { type: 'line', data: { labels: [], datasets: [{ data: [], borderColor: color, borderWidth: 2.5, fill: true, backgroundColor: 'rgba(44, 62, 80, 0.1)', tension: 0.4, pointRadius: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } } }); }
@@ -273,50 +253,90 @@
             chartInstances.temperature = createChart(document.getElementById('temperature-chart').getContext('2d'), '#e74c3c');
             chartInstances.airQuality = createChart(document.getElementById('air-quality-chart').getContext('2d'), '#9b59b6');
             function updateChart(chart, label, newData) { if(!chart) return; chart.data.labels.push(label); chart.data.datasets[0].data.push(newData); if (chart.data.labels.length > CHART_DATA_COUNT) { chart.data.labels.shift(); chart.data.datasets[0].data.shift(); } chart.update('none'); }
-            function simulateSensorData() { return { light: Math.floor(Math.random() * 1000), humidity: Math.floor(Math.random() * 101), temperature: Math.floor(Math.random() * 45), airQuality: Math.floor(Math.random() * 1000) + 50 }; }
+            function simulateSensorData() { return { light: Math.floor(Math.random() * 1000), humidity: Math.floor(Math.random() * 101), temperature: Math.floor(Math.random() * 45), airQuality: Math.floor(Math.random() * 1000) + 50, isRaining: Math.random() > 0.8 }; }
             function writeToTerminal(message) { terminalOutput.innerHTML += message + '\n'; terminalOutput.scrollTop = terminalOutput.scrollHeight; }
 
-            // Hava Durumu
-            const weatherIconEl = document.getElementById('weather-icon'), temperatureEl = document.getElementById('temperature'), weatherDescEl = document.getElementById('weather-description'), weatherHumidityEl = document.getElementById('weather-humidity'), weatherWindEl = document.getElementById('weather-wind'), gaugeNeedle = document.getElementById('gauge-needle'), riskValueEl = document.getElementById('risk-value'), riskTextEl = document.getElementById('risk-text');
-            function simulateWeatherData() {
-                const conditions = [ { desc: "Açık", icon: "fa-sun", rain: 0 }, { desc: "Parçalı Bulutlu", icon: "fa-cloud-sun", rain: 0.1 }, { desc: "Bulutlu", icon: "fa-cloud", rain: 0.2 }, { desc: "Hafif Yağmurlu", icon: "fa-cloud-rain", rain: 0.6 }, { desc: "Şiddetli Yağmur", icon: "fa-cloud-showers-heavy", rain: 1.0 } ];
-                const currentCondition = conditions[Math.floor(Math.random() * conditions.length)];
-                return { temp: Math.floor(Math.random() * 15) + 10, humidity: Math.floor(Math.random() * 50) + 45, wind: (Math.random() * 5 + 1).toFixed(1), ...currentCondition };
+            // Risk Göstergeleri
+            const gauges = {
+                flood: { needle: document.getElementById('gauge-flood'), value: document.getElementById('value-flood'), text: document.getElementById('text-flood') },
+                drought: { needle: document.getElementById('gauge-drought'), value: document.getElementById('value-drought'), text: document.getElementById('text-drought') },
+                humidity: { needle: document.getElementById('gauge-humidity'), value: document.getElementById('value-humidity'), text: document.getElementById('text-humidity') },
+                oxygen: { needle: document.getElementById('gauge-oxygen'), value: document.getElementById('value-oxygen'), text: document.getElementById('text-oxygen') }
+            };
+            function updateGauge(gauge, value, text, color) {
+                gauge.needle.style.transform = `rotate(${(value / 100) * 180 - 90}deg)`;
+                if(gauge.value.textContent.includes('%')) gauge.value.textContent = `${Math.round(value)}%`;
+                else gauge.value.textContent = value.toFixed(2) + '%';
+                gauge.text.textContent = text;
+                gauge.text.style.color = color;
             }
-            function updateWeatherUI() {
-                const data = simulateWeatherData();
-                weatherIconEl.className = `fas ${data.icon}`;
-                temperatureEl.textContent = `${data.temp}°C`;
-                weatherDescEl.textContent = data.desc;
-                weatherHumidityEl.textContent = `${data.humidity}%`;
-                weatherWindEl.textContent = `${data.wind} m/s`;
+
+            function updateRiskGauges(sensorData) {
+                // Sel Riski
+                let floodRisk = (sensorData.isRaining ? 50 : 0) + (sensorData.humidity * 0.5);
+                floodRisk = Math.min(floodRisk, 100);
+                let floodStatus = floodRisk < 40 ? {t: "Düşük", c: "var(--primary-color)"} : (floodRisk < 75 ? {t:"Orta", c:"var(--warning-color)"} : {t:"Yüksek", c:"var(--critical-color)"});
+                updateGauge(gauges.flood, floodRisk, floodStatus.t, floodStatus.c);
+
+                // Kuraklık Riski
+                let droughtRisk = (100 - sensorData.humidity) * 0.8 + (sensorData.isRaining ? 0 : 20);
+                droughtRisk = Math.min(droughtRisk, 100);
+                let droughtStatus = droughtRisk < 40 ? {t: "Düşük", c: "var(--primary-color)"} : (droughtRisk < 75 ? {t:"Orta", c:"var(--warning-color)"} : {t:"Yüksek", c:"var(--critical-color)"});
+                updateGauge(gauges.drought, droughtRisk, droughtStatus.t, droughtStatus.c);
                 
-                let risk = data.rain * 60 + data.humidity * 0.4; // Risk calculation
-                risk = Math.min(risk, 100);
-                riskValueEl.textContent = `${Math.round(risk)}%`;
-                gaugeNeedle.style.transform = `rotate(${(risk / 100) * 180 - 90}deg)`;
-                if (risk < 40) { riskTextEl.textContent = "Düşük Risk"; riskTextEl.style.color = 'var(--primary-color)'; } 
-                else if (risk < 75) { riskTextEl.textContent = "Orta Risk"; riskTextEl.style.color = 'var(--warning-color)'; } 
-                else { riskTextEl.textContent = "Yüksek Risk"; riskTextEl.style.color = 'var(--critical-color)'; }
+                // Nem Doygunluğu
+                let humidityStatus = sensorData.humidity < 30 ? {t: "Çok Düşük", c: "var(--warning-color)"} : (sensorData.humidity < 60 ? {t:"İdeal", c:"var(--primary-color)"} : {t:"Yüksek", c:"var(--info-color)"});
+                updateGauge(gauges.humidity, sensorData.humidity, humidityStatus.t, humidityStatus.c);
+                
+                // Oksijen Seviyesi
+                let oxygenLevel = 20.95 - (sensorData.airQuality / 2000); // Basit bir simülasyon
+                oxygenLevel = Math.max(19.5, Math.min(21, oxygenLevel));
+                let oxygenValue = ((oxygenLevel - 19.5) / 1.5) * 100; // 19.5-21 aralığını %0-100'e haritala
+                let oxygenStatus = oxygenLevel < 20.5 ? {t: "Düşük", c: "var(--warning-color)"} : {t:"Normal", c:"var(--primary-color)"};
+                updateGauge(gauges.oxygen, oxygenValue, oxygenStatus.t, oxygenStatus.c);
+                gauges.oxygen.value.textContent = oxygenLevel.toFixed(2) + '%'; // Oksijen için gerçek değeri göster
             }
             
             function updateAll() {
                 const sensorData = simulateSensorData();
                 const now = new Date();
                 const timeLabel = `${now.getHours()}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+                
                 lightValueEl.innerHTML = `${sensorData.light}<span class="unit">lux</span>`; updateChart(chartInstances.light, timeLabel, sensorData.light);
                 humidityValueEl.innerHTML = `${sensorData.humidity}<span class="unit">%</span>`; updateChart(chartInstances.humidity, timeLabel, sensorData.humidity);
                 temperatureValueEl.innerHTML = `${sensorData.temperature}<span class="unit">°C</span>`; updateChart(chartInstances.temperature, timeLabel, sensorData.temperature);
                 airQualityValueEl.innerHTML = `${sensorData.airQuality}<span class="unit">PPM</span>`; updateChart(chartInstances.airQuality, timeLabel, sensorData.airQuality);
-                writeToTerminal(`<span style="color:#888">[${timeLabel}]</span> Işık: ${sensorData.light} lux, Nem: ${sensorData.humidity}%, Sıcaklık: ${sensorData.temperature}°C, Hava Kalitesi: ${sensorData.airQuality} PPM`);
-                updateWeatherUI();
+                
+                writeToTerminal(`<span style="color:#888">[${timeLabel}]</span> Işık:${sensorData.light}, Nem:${sensorData.humidity}, Sıcaklık:${sensorData.temperature}, Hava Kalitesi:${sensorData.airQuality}`);
+                updateRiskGauges(sensorData);
             }
             
-            setInterval(updateAll, 3000);
-            updateAll();
-            writeToTerminal("ECO-S-ELNSOR Mobil Terminal v4.0 başlatılıyor...");
-            writeToTerminal("Sistem logları dinleniyor...");
+            // Konum İşlemleri
+            const locationTitle = document.getElementById('weather-location-title');
+            function locationSuccess(pos) {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+                // Gerçek bir uygulamada burada API çağrısı yapılır.
+                // Biz burada sadece konumu belirtiyoruz.
+                locationTitle.innerHTML = "Konumunuz İçin Risk Analizi <small>Veriler anlık olarak simüle edilmektedir.</small>";
+                startApp();
+            }
+
+            function locationError() {
+                locationTitle.innerHTML = "İstanbul, Başakşehir İçin Risk Analizi <small>Konum izni alınamadı, varsayılan konum kullanılıyor.</small>";
+                startApp();
+            }
+
+            function startApp(){
+                 setInterval(updateAll, 3000);
+                 updateAll();
+                 writeToTerminal("ECO-S-ELNSOR Mobil Terminal v5.0 başlatılıyor...");
+                 writeToTerminal("Sistem logları dinleniyor...");
+            }
+            
+            navigator.geolocation.getCurrentPosition(locationSuccess, locationError);
         }
+        
         initializeDashboard();
     });
     </script>
