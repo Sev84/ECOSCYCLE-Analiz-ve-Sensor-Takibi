@@ -60,13 +60,10 @@
         .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; font-size: 1.2em; font-weight: 600; }
         .card-header .title { display: flex; align-items: center; }
         .card-header .title i { margin-right: 15px; width: 25px; text-align: center; color: var(--primary-color); }
-        
-        /* Verimlilik Işığı */
         .efficiency-light { width: 18px; height: 18px; border-radius: 50%; transition: background-color 0.5s, box-shadow 0.5s; }
         .efficiency-light.status-ok { background-color: var(--primary-color); box-shadow: 0 0 10px var(--status-ok-glow); }
         .efficiency-light.status-warn { background-color: var(--warning-color); box-shadow: 0 0 10px var(--status-warn-glow); }
         .efficiency-light.status-crit { background-color: var(--critical-color); box-shadow: 0 0 10px var(--status-crit-glow); }
-
         .sensor-value { font-size: 2.5em; font-weight: 700; text-align: center; }
         .sensor-value .unit { font-size: 0.5em; font-weight: 400; margin-left: 5px; }
         .chart-container { position: relative; height: 120px; margin-top: 20px; }
@@ -77,13 +74,9 @@
         .info-images { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; justify-content: center; align-items: center; }
         .info-images .svg-container { text-align:center; width: 100%; max-width: 280px; height: 200px; padding:15px; background-color:rgba(255,255,255,0.6); border-radius:10px;}
         .info-images .svg-container svg { height: 100%; width: auto;}
-
-        /* SU HACMİ KARTI */
         .water-volume-card { display: flex; justify-content: space-around; text-align: center;}
         .volume-item p { margin: 0; opacity: 0.7;}
         .volume-item .sensor-value { font-size: 2em; }
-
-        /* HAVA DURUMU & RİSK BÖLÜMÜ */
         .risk-gauges-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; align-items: stretch; margin-top: 30px; }
         .gauge-card { text-align: center; padding: 20px; }
         .gauge-container { position: relative; width: 180px; height: 90px; margin: 20px auto 0 auto; overflow: hidden; }
@@ -93,7 +86,6 @@
         .gauge-value { font-size: 2em; font-weight: 700; margin-top: -50px; z-index: 1; position: relative; }
         .gauge-text { font-size: 1em; opacity: 0.8; z-index: 1; position: relative; }
         .gauge-card .card-header { justify-content: center; font-size: 1.1em;}
-
         #bluetooth-connecting-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; }
         #bluetooth-connecting-overlay.active { display: flex; }
         .bt-spinner { font-size: 5em; color: var(--info-color); animation: pulse 1.5s infinite; }
@@ -116,7 +108,7 @@
         <!-- ÜST NAVİGASYON -->
         <header class="top-nav">
             <div class="logo-container">
-                <img src="https://i.imgur.com/uQeD5hW.png" alt="logo1111.png">
+                <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 95 C 20 95, 10 65, 50 10 C 90 65, 80 95, 50 95 Z' fill='%2327ae60'/%3E%3Cpath d='M50 95 C 60 85, 70 70, 50 10' fill='none' stroke='%232ecc71' stroke-width='5'/%3E%3C/svg%3E" alt="logo1111.png">
                 <h1>ECO-S-ELNSOR</h1>
             </div>
             <nav class="nav-tabs">
