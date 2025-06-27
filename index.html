@@ -18,9 +18,6 @@
             --light-theme-bg: #f7fdf9; --dark-text: #34495e; --card-bg: rgba(255, 255, 255, 0.7);
             --card-shadow: rgba(0, 0, 0, 0.1); --nav-bg: #ffffff; --nav-text-color: #34495e; 
             --info-color: #3498db; --border-color: rgba(0, 0, 0, 0.1);
-            --status-ok-glow: rgba(39, 174, 96, 0.7);
-            --status-warn-glow: rgba(243, 156, 18, 0.7);
-            --status-crit-glow: rgba(231, 76, 60, 0.7);
         }
         *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -60,10 +57,6 @@
         .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; font-size: 1.2em; font-weight: 600; }
         .card-header .title { display: flex; align-items: center; }
         .card-header .title i { margin-right: 15px; width: 25px; text-align: center; color: var(--primary-color); }
-        .efficiency-light { width: 18px; height: 18px; border-radius: 50%; transition: background-color 0.5s, box-shadow 0.5s; }
-        .efficiency-light.status-ok { background-color: var(--primary-color); box-shadow: 0 0 10px var(--status-ok-glow); }
-        .efficiency-light.status-warn { background-color: var(--warning-color); box-shadow: 0 0 10px var(--status-warn-glow); }
-        .efficiency-light.status-crit { background-color: var(--critical-color); box-shadow: 0 0 10px var(--status-crit-glow); }
         .sensor-value { font-size: 2.5em; font-weight: 700; text-align: center; }
         .sensor-value .unit { font-size: 0.5em; font-weight: 400; margin-left: 5px; }
         .chart-container { position: relative; height: 120px; margin-top: 20px; }
@@ -77,6 +70,15 @@
         .water-volume-card { display: flex; justify-content: space-around; text-align: center;}
         .volume-item p { margin: 0; opacity: 0.7;}
         .volume-item .sensor-value { font-size: 2em; }
+
+        /* DURUM KARTLARI */
+        .status-card { display: flex; align-items: center; gap: 20px;}
+        .status-card i { font-size: 2.5em; transition: color 0.5s; }
+        .status-card p { margin: 0; font-size: 1.1em; }
+        .status-ok { color: var(--primary-color); }
+        .status-warn { color: var(--warning-color); }
+        .status-crit { color: var(--critical-color); }
+        
         .risk-gauges-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; align-items: stretch; margin-top: 30px; }
         .gauge-card { text-align: center; padding: 20px; }
         .gauge-container { position: relative; width: 180px; height: 90px; margin: 20px auto 0 auto; overflow: hidden; }
@@ -113,9 +115,10 @@
             </div>
             <nav class="nav-tabs">
                 <a href="#overview" class="nav-link active">Genel Bakış</a>
-                <a href="#graphs" class="nav-link">Anlık Veri Takibi</a>
+                <a href="#status" class="nav-link">Sistem Durumu</a>
                 <a href="#how-to" class="nav-link">Nasıl Kullanılır?</a>
                 <a href="#about" class="nav-link">Hakkımızda</a>
+                <a href="#graphs" class="nav-link">Anlık Grafikler</a>
                 <a href="#weather" class="nav-link">Bölgesel Risk Analizi</a>
             </nav>
             <div class="top-nav-actions">
@@ -145,26 +148,35 @@
                         </div>
                     </div>
                     <div class="overview-image">
-                        <img src="https://i.imgur.com/S8dFvT9.png" alt="Mobil Arayüz Görünümü">
+                        <img src="https://placehold.co/400x800/2ecc71/ffffff?text=Mobil+Aray%C3%BCz" alt="Mobil Arayüz Görünümü">
                     </div>
                 </div>
             </section>
             
-            <section id="graphs" class="content-section">
-                <h2 class="section-title">Anlık Veri Takibi</h2>
-                <div class="grid-container">
-                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-sun"></i><span>Işık Şiddeti</span></div></div><div class="card-body"><div class="sensor-value" id="light-value">--</div><div class="chart-container"><canvas id="light-chart"></canvas></div></div></div>
-                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-tint"></i><span>Yağmur Bahçesi Su Nemi</span></div><div id="humidity-light" class="efficiency-light"></div></div><div class="card-body"><div class="sensor-value" id="humidity-value">--</div><div class="chart-container"><canvas id="humidity-chart"></canvas></div></div></div>
-                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-thermometer-half"></i><span>Ortam Sıcaklığı</span></div></div><div class="card-body"><div class="sensor-value" id="temperature-value">--</div><div class="chart-container"><canvas id="temperature-chart"></canvas></div></div></div>
-                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-wind"></i><span>Oksijen Verimliliği</span></div><div id="oxygen-light" class="efficiency-light"></div></div><div class="card-body"><div class="sensor-value" id="air-quality-value">--</div><div class="chart-container"><canvas id="air-quality-chart"></canvas></div></div></div>
+            <section id="status" class="content-section">
+                <h2 class="section-title">Sistem Durumu ve Verimlilik</h2>
+                <div class="grid-container" style="grid-template-columns: 1fr 1fr;">
+                    <div class="card">
+                        <div class="card-header"><div class="title"><i class="fas fa-tint"></i><span>Su Verimliliği</span></div></div>
+                        <div class="status-card">
+                            <i id="water-status-icon" class="fas fa-hand-holding-droplet"></i>
+                            <p id="water-status-text">Veriler yükleniyor...</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><div class="title"><i class="fas fa-leaf"></i><span>Biyoreaktör Durumu</span></div></div>
+                        <div class="status-card">
+                            <i id="oxygen-status-icon" class="fas fa-lungs"></i>
+                            <p id="oxygen-status-text">Veriler yükleniyor...</p>
+                        </div>
+                    </div>
                 </div>
             </section>
-
+            
             <section id="how-to" class="content-section info-page">
                 <h2 class="section-title">Nasıl Kullanılır?</h2>
                 <h3>Biyoreaktörler ve Mikroalgler</h3>
                 <p>Sistemimizin kalbinde, oksijen üreten mikroalgleri barındıran biyoreaktörler yer alır. Mikroalgler, fotosentez yoluyla havadaki karbondioksiti tüketir ve yerine temiz oksijen salar. Bu, onları kentsel hava kalitesini iyileştirmek için güçlü bir doğal araca dönüştürür.</p>
-                <!-- GÜNCELLENDİ: Yeni SVG Görselleri -->
                 <div class="info-images">
                     <div class="svg-container">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><linearGradient id="a" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#88f"/><stop offset="100%" stop-color="#66f"/></linearGradient></defs><path fill="#c7ecee" d="M100 130a45 45 0 00-45 45v5h90v-5a45 45 0 00-45-45z"/><path fill="url(#a)" d="M100 130a45 45 0 0145 45v-5a40 40 0 00-80 0v5a45 45 0 0135-45z"/><path fill="#9bceb7" d="M57 140a3 3 0 11-6 0 3 3 0 016 0zm9 13a3 3 0 11-6 0 3 3 0 016 0zm14-5a3 3 0 11-6 0 3 3 0 016 0zm11 11a3 3 0 11-6 0 3 3 0 016 0zm12-7a3 3 0 11-6 0 3 3 0 016 0zm10 9a3 3 0 11-6 0 3 3 0 016 0zm-60-3a4 4 0 11-8 0 4 4 0 018 0zm11 14a4 4 0 11-8 0 4 4 0 018 0zm13-6a4 4 0 11-8 0 4 4 0 018 0zm12 12a4 4 0 11-8 0 4 4 0 018 0zm11-4a4 4 0 11-8 0 4 4 0 018 0zm12 10a4 4 0 11-8 0 4 4 0 018 0z"/><path fill="#fff" d="M60 20 L 140 20 L 140 130 L 60 130 Z" opacity="0.2" rx="10"/><path fill="none" stroke="#66f" stroke-width="4" d="M100 20v110" stroke-linecap="round"/><path fill="#66f" d="M100 20l-15 15h30l-15-15z M100 130l-15-15h30l-15 15z"/><text x="110" y="80" font-family="Poppins" font-size="12" fill="#fff">CO2</text><text x="80" y="80" font-family="Poppins" font-size="12" fill="#fff" text-anchor="end">O2</text></svg>
@@ -173,10 +185,6 @@
                     <div class="svg-container">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="#b08968" d="M0 160h200v20H0z"/><path fill="#8c6a4d" d="M0 140h200v20H0z"/><path fill="#e0ac69" d="M0 120h200v20H0z"/><path fill="#2ecc71" d="M50 120 l-10 -20 h20z m40 0 l-10 -30 h20z m60 0 l-10 -25 h20z "/><path fill="#27ae60" d="M30 120 l-10-25 h20z m70 0 l-10 -20 h20z m50 0 l-10-35 h20z"/><path fill="none" stroke="#3498db" stroke-width="3" stroke-dasharray="5 5" d="M40 40v80m120-80v80m-60-90v90"/><path fill="#3498db" d="M40 40l-10 10h20z m120 0l-10 10h20z m-60-10l-10 10h20z"/></svg>
                         <p style="margin-top:5px; font-size:0.9em; opacity:0.8;">Yağmur Bahçesi</p>
-                    </div>
-                     <div class="svg-container">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="#dfe6e9" d="M20 180h160v10H20z"/><path fill="#b2bec3" d="M30 80h30v100H30zm55 40h30v60H85zm55-20h30v80H140z"/><path fill="#2d3436" d="M35 85h20v90H35zm55 35h20v50H90zm55-20h20v70H145z"/><path fill="none" stroke="#27ae60" stroke-width="4" stroke-linecap="round" d="M65 140h15m25 20h20"/><path fill="#27ae60" d="M80 140a5 5 0 11-10 0 5 5 0 0110 0z m45 20a5 5 0 11-10 0 5 5 0 0110 0z"/><path fill="none" stroke="#6c5ce7" stroke-width="3" d="M50 75a60 60 0 01100 0"/><path fill="none" stroke="#fdcb6e" stroke-width="3" d="M60 70a70 70 0 0180 0"/><path fill="none" stroke="#00b894" stroke-width="3" d="M70 65a80 80 0 0160 0"/></svg>
-                        <p style-="margin-top:5px; font-size:0.9em; opacity:0.8;">Akıllı Şehir Entegrasyonu</p>
                     </div>
                 </div>
             </section>
@@ -189,6 +197,16 @@
                     <li><b>Akıllı ve Otomatik Kontrol Sağlamak:</b> IoT sensörleri ile toprak nemi, su akışı ve hava kalitesi gibi kritik verileri anlık olarak takip edip, sistemi en verimli şekilde otomatik olarak yönetmek.</li>
                     <li><b>Yeşil Altyapıyı Güçlendirmek:</b> Kentsel biyoçeşitliliği korumak, şehirlerin ekolojik direncini artırmak ve doğayla uyumlu, sürdürülebilir kalkınma hedeflerine ulaşmayı teşvik etmek.</li>
                 </ul>
+            </section>
+            
+            <section id="graphs" class="content-section">
+                <h2 class="section-title">Anlık Veri Takibi</h2>
+                <div class="grid-container">
+                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-sun"></i><span>Işık Şiddeti</span></div></div><div class="card-body"><div class="sensor-value" id="light-value">--</div><div class="chart-container"><canvas id="light-chart"></canvas></div></div></div>
+                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-tint"></i><span>Yağmur Bahçesi Su Nemi</span></div><div id="humidity-light" class="efficiency-light"></div></div><div class="card-body"><div class="sensor-value" id="humidity-value">--</div><div class="chart-container"><canvas id="humidity-chart"></canvas></div></div></div>
+                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-thermometer-half"></i><span>Ortam Sıcaklığı</span></div></div><div class="card-body"><div class="sensor-value" id="temperature-value">--</div><div class="chart-container"><canvas id="temperature-chart"></canvas></div></div></div>
+                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-wind"></i><span>Oksijen Verimliliği</span></div><div id="oxygen-light" class="efficiency-light"></div></div><div class="card-body"><div class="sensor-value" id="air-quality-value">--</div><div class="chart-container"><canvas id="air-quality-chart"></canvas></div></div></div>
+                </div>
             </section>
 
              <section id="weather" class="content-section">
@@ -312,6 +330,39 @@
                 };
                 updateRiskGauges(weatherData);
             }
+            
+            // GÜNCELLENDİ: "Status" bölümü için elementler
+            const waterStatusIcon = document.getElementById('water-status-icon');
+            const waterStatusText = document.getElementById('water-status-text');
+            const oxygenStatusIcon = document.getElementById('oxygen-status-icon');
+            const oxygenStatusText = document.getElementById('oxygen-status-text');
+
+            function updateStatusFeedback(sensorData) {
+                // Su Verimliliği Geri Bildirimi
+                if (sensorData.humidity >= 40 && sensorData.humidity <= 70) {
+                    waterStatusIcon.className = "fas fa-hand-holding-droplet status-ok";
+                    waterStatusText.textContent = "Toprak nem koşulları ideal, su kullanımı optimal düzeyde.";
+                } else if (sensorData.humidity >= 20 && sensorData.humidity <= 85) {
+                    waterStatusIcon.className = "fas fa-hand-holding-droplet status-warn";
+                    waterStatusText.textContent = "Toprak nemi sınırlarda, sulama gerekebilir.";
+                } else {
+                    waterStatusIcon.className = "fas fa-hand-holding-droplet status-crit";
+                    waterStatusText.textContent = "Kritik nem seviyesi! Acil sulama gerekli.";
+                }
+
+                // Oksijen Verimliliği Geri Bildirimi
+                if (sensorData.airQuality < 350) {
+                    oxygenStatusIcon.className = "fas fa-lungs status-ok";
+                    oxygenStatusText.textContent = "Oksijen üretimi yüksek verimlilikte.";
+                } else if (sensorData.airQuality < 700) {
+                    oxygenStatusIcon.className = "fas fa-lungs status-warn";
+                    oxygenStatusText.textContent = "Oksijen üretimi orta seviyede.";
+                } else {
+                    oxygenStatusIcon.className = "fas fa-lungs status-crit";
+                    oxygenStatusText.textContent = "Düşük oksijen verimliliği, sistem kontrol ediliyor.";
+                }
+            }
+
 
             function updateAll(currentPos) {
                 const sensorData = simulateSensorData();
@@ -321,20 +372,14 @@
                 lightValueEl.innerHTML = `${sensorData.light}<span class="unit">lux</span>`; updateChart(chartInstances.light, timeLabel, sensorData.light);
                 
                 humidityValueEl.innerHTML = `${sensorData.humidity}<span class="unit">%</span>`; updateChart(chartInstances.humidity, timeLabel, sensorData.humidity);
-                let humidityStatus = 'status-crit';
-                if(sensorData.humidity >= 40 && sensorData.humidity <= 70) humidityStatus = 'status-ok';
-                else if(sensorData.humidity >= 20 && sensorData.humidity <= 85) humidityStatus = 'status-warn';
-                humidityLight.className = `efficiency-light ${humidityStatus}`;
-
+                
                 temperatureValueEl.innerHTML = `${sensorData.temperature}<span class="unit">°C</span>`; updateChart(chartInstances.temperature, timeLabel, sensorData.temperature);
                 
                 airQualityValueEl.innerHTML = `${sensorData.airQuality}<span class="unit">PPM</span>`; updateChart(chartInstances.airQuality, timeLabel, sensorData.airQuality);
-                let oxygenStatus = 'status-crit';
-                if(sensorData.airQuality < 350) oxygenStatus = 'status-ok';
-                else if(sensorData.airQuality < 700) oxygenStatus = 'status-warn';
-                oxygenLight.className = `efficiency-light ${oxygenStatus}`;
                 
-                writeToTerminal(`<span style="color:#888">[${timeLabel}]</span> Işık:${sensorData.light}, Nem:${sensorData.humidity}, Sıcaklık:${sensorData.temperature}, Hava Kalitesi:${sensorData.airQuality}`);
+                updateStatusFeedback(sensorData); // Yeni geri bildirim fonksiyonunu çağır
+
+                writeToTerminal(`<span style="color:#888">[${timeLabel}]</span> Işık:${sensorData.light}, Nem:${sensorData.humidity}, Sıcaklık:${sensorData.temperature}, Hava Kalitesi:${sensorData.airQuality}, Durum: ${waterStatusText.textContent}`);
                 
                 if (currentPos) {
                     fetchAndProcessWeatherData(currentPos.coords.latitude, currentPos.coords.longitude);
@@ -345,7 +390,7 @@
             function startApp(position) {
                  setInterval(() => updateAll(position), 3000);
                  updateAll(position);
-                 writeToTerminal("ECO-S-ELNSOR Mobil Terminal v6.0 başlatılıyor...");
+                 writeToTerminal("ECO-S-ELNSOR Mobil Terminal v7.0 başlatılıyor...");
                  writeToTerminal("Sistem logları dinleniyor...");
             }
 
