@@ -50,7 +50,7 @@
         .overview-info .section-title { text-align: left; font-size: 3em; }
         .overview-info p.subtitle { font-size: 1.2em; opacity: 0.7; margin-top: -30px; margin-bottom: 30px; }
         .overview-image { flex: 1; text-align: center; }
-        .overview-image img { max-width: 100%; height: auto; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        .overview-image img { max-width: 400px; height: auto; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
         .overview-info .card { background-color: var(--card-bg); backdrop-filter: blur(5px); }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
         .card { background-color: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px var(--card-shadow); backdrop-filter: blur(10px); }
@@ -70,15 +70,12 @@
         .water-volume-card { display: flex; justify-content: space-around; text-align: center;}
         .volume-item p { margin: 0; opacity: 0.7;}
         .volume-item .sensor-value { font-size: 2em; }
-
-        /* DURUM KARTLARI */
         .status-card { display: flex; align-items: center; gap: 20px;}
         .status-card i { font-size: 2.5em; transition: color 0.5s; }
         .status-card p { margin: 0; font-size: 1.1em; }
         .status-ok { color: var(--primary-color); }
         .status-warn { color: var(--warning-color); }
         .status-crit { color: var(--critical-color); }
-        
         .risk-gauges-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; align-items: stretch; margin-top: 30px; }
         .gauge-card { text-align: center; padding: 20px; }
         .gauge-container { position: relative; width: 180px; height: 90px; margin: 20px auto 0 auto; overflow: hidden; }
@@ -107,15 +104,14 @@
 </head>
 <body>
     <div class="main-container">
-        <!-- ÜST NAVİGASYON -->
         <header class="top-nav">
             <div class="logo-container">
-                <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 95 C 20 95, 10 65, 50 10 C 90 65, 80 95, 50 95 Z' fill='%2327ae60'/%3E%3Cpath d='M50 95 C 60 85, 70 70, 50 10' fill='none' stroke='%232ecc71' stroke-width='5'/%3E%3C/svg%3E" alt="logo1111.png">
+                <img src="https://i.imgur.com/bQk0M9i.png" alt="logo1111.png">
                 <h1>ECO-S-ELNSOR</h1>
             </div>
             <nav class="nav-tabs">
-                <a href="#overview" class="nav-link active">Genel Bakış</a>
-                <a href="#status" class="nav-link">Sistem Durumu</a>
+                 <a href="#overview" class="nav-link active">Genel Bakış</a>
+                <a href="#status" class="nav-link">Sistem Uyarıları</a>
                 <a href="#how-to" class="nav-link">Nasıl Kullanılır?</a>
                 <a href="#about" class="nav-link">Hakkımızda</a>
                 <a href="#graphs" class="nav-link">Anlık Grafikler</a>
@@ -126,7 +122,6 @@
             </div>
         </header>
 
-        <!-- ANA İÇERİK -->
         <main class="content-area">
             <section id="overview" class="content-section">
                  <div class="overview-layout">
@@ -138,47 +133,47 @@
                             <div class="water-volume-card">
                                 <div class="volume-item">
                                     <p>Yağmur Bahçesi</p>
-                                    <div class="sensor-value" id="rain-garden-volume">-- L</div>
+                                    <div class="sensor-value" id="rain-garden-volume">2.0 L</div>
                                 </div>
                                 <div class="volume-item">
                                     <p>Mikroalg Reaktörü</p>
-                                    <div class="sensor-value" id="microalgae-volume">-- L</div>
+                                    <div class="sensor-value" id="microalgae-volume">1.0 L</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="overview-image">
-                        <img src="https://placehold.co/400x800/2ecc71/ffffff?text=Mobil+Aray%C3%BCz" alt="Mobil Arayüz Görünümü">
+                        <img src="https://i.imgur.com/S8dFvT9.png" alt="Mobil Arayüz Görünümü">
                     </div>
                 </div>
             </section>
             
             <section id="status" class="content-section">
-                <h2 class="section-title">Sistem Durumu ve Verimlilik</h2>
-                <div class="grid-container" style="grid-template-columns: 1fr 1fr;">
-                    <div class="card">
-                        <div class="card-header"><div class="title"><i class="fas fa-tint"></i><span>Su Verimliliği</span></div></div>
-                        <div class="status-card">
-                            <i id="water-status-icon" class="fas fa-hand-holding-droplet"></i>
-                            <p id="water-status-text">Veriler yükleniyor...</p>
-                        </div>
+                <h2 class="section-title">Sistem Uyarıları</h2>
+                <div id="status-alerts" class="card">
+                    <div id="alert-soil" class="alert alert-red">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Toprak kuru, sulama sistemi devreye alınmalı.</p>
                     </div>
-                    <div class="card">
-                        <div class="card-header"><div class="title"><i class="fas fa-leaf"></i><span>Biyoreaktör Durumu</span></div></div>
-                        <div class="status-card">
-                            <i id="oxygen-status-icon" class="fas fa-lungs"></i>
-                            <p id="oxygen-status-text">Veriler yükleniyor...</p>
-                        </div>
+                     <div id="alert-light" class="alert alert-yellow">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Işık seviyesi yetersiz, fotosentez verimi düşebilir.</p>
+                    </div>
+                     <div id="alert-temp" class="alert alert-red">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Sıcaklık kritik seviyede yüksek, sistem kontrol ediliyor.</p>
+                    </div>
+                    <div id="alert-ok" class="alert alert-green">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Tüm koşullar ideal, sistem stabil çalışıyor.</p>
                     </div>
                 </div>
             </section>
-            
+
             <section id="how-to" class="content-section info-page">
                 <h2 class="section-title">Nasıl Kullanılır?</h2>
-                <h3>Biyoreaktörler ve Mikroalgler</h3>
-                <p>Sistemimizin kalbinde, oksijen üreten mikroalgleri barındıran biyoreaktörler yer alır. Mikroalgler, fotosentez yoluyla havadaki karbondioksiti tüketir ve yerine temiz oksijen salar. Bu, onları kentsel hava kalitesini iyileştirmek için güçlü bir doğal araca dönüştürür.</p>
                 <div class="info-images">
-                    <div class="svg-container">
+                     <div class="svg-container">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><linearGradient id="a" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#88f"/><stop offset="100%" stop-color="#66f"/></linearGradient></defs><path fill="#c7ecee" d="M100 130a45 45 0 00-45 45v5h90v-5a45 45 0 00-45-45z"/><path fill="url(#a)" d="M100 130a45 45 0 0145 45v-5a40 40 0 00-80 0v5a45 45 0 0135-45z"/><path fill="#9bceb7" d="M57 140a3 3 0 11-6 0 3 3 0 016 0zm9 13a3 3 0 11-6 0 3 3 0 016 0zm14-5a3 3 0 11-6 0 3 3 0 016 0zm11 11a3 3 0 11-6 0 3 3 0 016 0zm12-7a3 3 0 11-6 0 3 3 0 016 0zm10 9a3 3 0 11-6 0 3 3 0 016 0zm-60-3a4 4 0 11-8 0 4 4 0 018 0zm11 14a4 4 0 11-8 0 4 4 0 018 0zm13-6a4 4 0 11-8 0 4 4 0 018 0zm12 12a4 4 0 11-8 0 4 4 0 018 0zm11-4a4 4 0 11-8 0 4 4 0 018 0zm12 10a4 4 0 11-8 0 4 4 0 018 0z"/><path fill="#fff" d="M60 20 L 140 20 L 140 130 L 60 130 Z" opacity="0.2" rx="10"/><path fill="none" stroke="#66f" stroke-width="4" d="M100 20v110" stroke-linecap="round"/><path fill="#66f" d="M100 20l-15 15h30l-15-15z M100 130l-15-15h30l-15 15z"/><text x="110" y="80" font-family="Poppins" font-size="12" fill="#fff">CO2</text><text x="80" y="80" font-family="Poppins" font-size="12" fill="#fff" text-anchor="end">O2</text></svg>
                         <p style="margin-top:5px; font-size:0.9em; opacity:0.8;">Biyoreaktör</p>
                     </div>
@@ -188,7 +183,17 @@
                     </div>
                 </div>
             </section>
-
+            
+            <section id="graphs" class="content-section">
+                <h2 class="section-title">Anlık Veri Takibi</h2>
+                <div class="grid-container">
+                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-sun"></i><span>Işık Şiddeti</span></div></div><div class="card-body"><div class="sensor-value" id="light-value">--</div><div class="chart-container"><canvas id="light-chart"></canvas></div></div></div>
+                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-tint"></i><span>Toprak Nemi</span></div></div><div class="card-body"><div class="sensor-value" id="humidity-value">--</div><div class="chart-container"><canvas id="humidity-chart"></canvas></div></div></div>
+                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-thermometer-half"></i><span>Ortam Sıcaklığı</span></div></div><div class="card-body"><div class="sensor-value" id="temperature-value">--</div><div class="chart-container"><canvas id="temperature-chart"></canvas></div></div></div>
+                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-wind"></i><span>Hava Kalitesi</span></div></div><div class="card-body"><div class="sensor-value" id="air-quality-value">--</div><div class="chart-container"><canvas id="air-quality-chart"></canvas></div></div></div>
+                </div>
+            </section>
+            
             <section id="about" class="content-section info-page">
                 <h2 class="section-title">Projenin Amaç ve Hedefleri</h2>
                 <ul>
@@ -197,16 +202,6 @@
                     <li><b>Akıllı ve Otomatik Kontrol Sağlamak:</b> IoT sensörleri ile toprak nemi, su akışı ve hava kalitesi gibi kritik verileri anlık olarak takip edip, sistemi en verimli şekilde otomatik olarak yönetmek.</li>
                     <li><b>Yeşil Altyapıyı Güçlendirmek:</b> Kentsel biyoçeşitliliği korumak, şehirlerin ekolojik direncini artırmak ve doğayla uyumlu, sürdürülebilir kalkınma hedeflerine ulaşmayı teşvik etmek.</li>
                 </ul>
-            </section>
-            
-            <section id="graphs" class="content-section">
-                <h2 class="section-title">Anlık Veri Takibi</h2>
-                <div class="grid-container">
-                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-sun"></i><span>Işık Şiddeti</span></div></div><div class="card-body"><div class="sensor-value" id="light-value">--</div><div class="chart-container"><canvas id="light-chart"></canvas></div></div></div>
-                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-tint"></i><span>Yağmur Bahçesi Su Nemi</span></div><div id="humidity-light" class="efficiency-light"></div></div><div class="card-body"><div class="sensor-value" id="humidity-value">--</div><div class="chart-container"><canvas id="humidity-chart"></canvas></div></div></div>
-                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-thermometer-half"></i><span>Ortam Sıcaklığı</span></div></div><div class="card-body"><div class="sensor-value" id="temperature-value">--</div><div class="chart-container"><canvas id="temperature-chart"></canvas></div></div></div>
-                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-wind"></i><span>Oksijen Verimliliği</span></div><div id="oxygen-light" class="efficiency-light"></div></div><div class="card-body"><div class="sensor-value" id="air-quality-value">--</div><div class="chart-container"><canvas id="air-quality-chart"></canvas></div></div></div>
-                </div>
             </section>
 
              <section id="weather" class="content-section">
@@ -233,181 +228,160 @@
 
     <a href="#overview" id="back-to-top-btn"><i class="fa-solid fa-arrow-up"></i></a>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.querySelectorAll('.nav-link');
-        const contentSections = document.querySelectorAll('.content-section');
-        const btConnectingOverlay = document.getElementById('bluetooth-connecting-overlay');
-        const btTerminalBtn = document.getElementById('bluetooth-terminal-btn');
-        const backToTopBtn = document.getElementById('back-to-top-btn');
-        const mainContentArea = document.querySelector('.main-container');
+    <script type="module">
+        // --- FIREBASE SDK'LARI ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, doc, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-        navLinks.forEach(link => { link.addEventListener('click', e => { e.preventDefault(); document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' }); }); });
-        
-        function onScroll() {
-            let currentSectionId = '';
-            contentSections.forEach(section => { if (mainContentArea.scrollTop >= section.offsetTop - 150) { currentSectionId = section.getAttribute('id'); } });
-            navLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === `#${currentSectionId}`) { link.classList.add('active'); } });
-            if (mainContentArea.scrollTop > 300) { backToTopBtn.style.display = 'flex'; } else { backToTopBtn.style.display = 'none'; }
-        }
-        mainContentArea.addEventListener('scroll', onScroll);
+        // --- GLOBAL DEĞİŞKENLER (CANVAS ORTAMI SAĞLAR) ---
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "YOUR_API_KEY", authDomain: "YOUR_AUTH_DOMAIN", projectId: "YOUR_PROJECT_ID" };
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'ecocycle-default';
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-        btTerminalBtn.addEventListener('click', () => {
-            btConnectingOverlay.classList.add('active');
-            setTimeout(() => {
-                btConnectingOverlay.classList.remove('active');
-                document.getElementById('terminal').scrollIntoView({ behavior: 'smooth' });
-            }, 2500);
+        // --- UYGULAMA MANTIĞI ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            const btConnectingOverlay = document.getElementById('bluetooth-connecting-overlay');
+            const btTerminalBtn = document.getElementById('bluetooth-terminal-btn');
+            const backToTopBtn = document.getElementById('back-to-top-btn');
+            const mainContentArea = document.querySelector('.main-container');
+
+            navLinks.forEach(link => { link.addEventListener('click', e => { e.preventDefault(); document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' }); }); });
+            
+            function onScroll() {
+                let currentSectionId = '';
+                contentSections.forEach(section => { if (mainContentArea.scrollTop >= section.offsetTop - 150) { currentSectionId = section.getAttribute('id'); } });
+                navLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === `#${currentSectionId}`) { link.classList.add('active'); } });
+                if (mainContentArea.scrollTop > 300) { backToTopBtn.style.display = 'flex'; } else { backToTopBtn.style.display = 'none'; }
+            }
+            mainContentArea.addEventListener('scroll', onScroll);
+
+            btTerminalBtn.addEventListener('click', () => {
+                btConnectingOverlay.classList.add('active');
+                setTimeout(() => {
+                    btConnectingOverlay.classList.remove('active');
+                    document.getElementById('terminal').scrollIntoView({ behavior: 'smooth' });
+                }, 2500);
+            });
+
+            // --- FIREBASE BAĞLANTISI ---
+            let db, auth;
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                setLogLevel('debug');
+
+                try {
+                    if (initialAuthToken) {
+                        console.log("Attempting to sign in with custom token...");
+                        await signInWithCustomToken(auth, initialAuthToken);
+                        console.log("Successfully signed in with custom token.");
+                    } else {
+                        console.log("No custom token found, signing in anonymously...");
+                        await signInAnonymously(auth);
+                        console.log("Successfully signed in anonymously.");
+                    }
+                } catch (tokenError) {
+                    console.warn("Custom token sign-in failed:", tokenError.message);
+                    console.log("Falling back to anonymous sign-in...");
+                    await signInAnonymously(auth);
+                    console.log("Successfully signed in anonymously after fallback.");
+                }
+
+                console.log("Firebase Auth successful. User:", auth.currentUser.uid);
+                initializeDashboard();
+
+            } catch (error) {
+                console.error("Firebase Initialization Error:", error);
+                document.body.innerHTML = "Firebase bağlantısı kurulamadı. Lütfen konsolu kontrol edin.";
+                return;
+            }
+
+            function initializeDashboard() {
+                const lightValueEl = document.getElementById('light-value'), humidityValueEl = document.getElementById('humidity-value'), temperatureValueEl = document.getElementById('temperature-value'), airQualityValueEl = document.getElementById('air-quality-value'), terminalOutput = document.getElementById('terminal-output'), CHART_DATA_COUNT = 15;
+                const alertSoil = document.getElementById('alert-soil'), alertLight = document.getElementById('alert-light'), alertTemp = document.getElementById('alert-temp'), alertOk = document.getElementById('alert-ok');
+                let chartInstances = {};
+
+                function createChart(ctx, color) { return new Chart(ctx, { type: 'line', data: { labels: [], datasets: [{ data: [], borderColor: color, borderWidth: 2.5, fill: true, backgroundColor: 'rgba(44, 62, 80, 0.1)', tension: 0.4, pointRadius: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } } }); }
+                chartInstances.light = createChart(document.getElementById('light-chart').getContext('2d'), '#f1c40f');
+                chartInstances.humidity = createChart(document.getElementById('humidity-chart').getContext('2d'), '#3498db');
+                chartInstances.temperature = createChart(document.getElementById('temperature-chart').getContext('2d'), '#e74c3c');
+                chartInstances.airQuality = createChart(document.getElementById('air-quality-chart').getContext('2d'), '#9b59b6');
+                function updateChart(chart, label, newData) { if(!chart) return; chart.data.labels.push(label); chart.data.datasets[0].data.push(newData); if (chart.data.labels.length > CHART_DATA_COUNT) { chart.data.labels.shift(); chart.data.datasets[0].data.shift(); } chart.update('none'); }
+                
+                const rainGardenVolumeEl = document.getElementById('rain-garden-volume');
+                const microalgaeVolumeEl = document.getElementById('microalgae-volume');
+                rainGardenVolumeEl.textContent = '2.0 L';
+                microalgaeVolumeEl.textContent = '1.0 L';
+
+                function writeToTerminal(message) { terminalOutput.innerHTML += message + '\n'; terminalOutput.scrollTop = terminalOutput.scrollHeight; }
+
+                const sensorDataRef = doc(db, `artifacts/${appId}/public/data/device/live`);
+                onSnapshot(sensorDataRef, (doc) => {
+                    if (doc.exists()) {
+                        const sensorData = doc.data();
+                        console.log("Firestore'dan yeni veri:", sensorData);
+                        updateAll(sensorData);
+                    } else {
+                        console.log("Veri bulunamadı. Simülasyon modunda çalışılıyor.");
+                        writeToTerminal("[UYARI] Canlı veri akışı bulunamadı. Simülasyon verileri kullanılıyor.");
+                        // Canlı veri yoksa, simülasyonla devam et
+                        setInterval(() => {
+                             const simulatedData = { light: Math.floor(Math.random() * 4096), soil: Math.floor(Math.random() * 4096), temperature: (Math.random() * 20 + 15), airQuality: Math.floor(Math.random() * 4096) };
+                             updateAll(simulatedData);
+                        }, 3000);
+                    }
+                }, (error) => {
+                    console.error("Firestore dinleme hatası: ", error);
+                    writeToTerminal(`[HATA] Firestore dinlenemiyor: ${error.message}`);
+                });
+
+                function updateAll(sensorData) {
+                    if (!sensorData) return;
+                    const now = new Date();
+                    const timeLabel = `${now.getHours()}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+                    
+                    lightValueEl.innerHTML = `${sensorData.light}<span class="unit"></span>`; updateChart(chartInstances.light, timeLabel, sensorData.light);
+                    humidityValueEl.innerHTML = `${sensorData.soil}<span class="unit"></span>`; updateChart(chartInstances.humidity, timeLabel, sensorData.soil);
+                    temperatureValueEl.innerHTML = `${sensorData.temperature.toFixed(1)}<span class="unit">°C</span>`; updateChart(chartInstances.temperature, timeLabel, sensorData.temperature);
+                    airQualityValueEl.innerHTML = `${sensorData.airQuality}<span class="unit"></span>`; updateChart(chartInstances.airQuality, timeLabel, sensorData.airQuality);
+                    
+                    let isProblemFound = false;
+                    let terminalMessage = "Tüm koşullar ideal.";
+                    alertSoil.classList.remove('show');
+                    alertLight.classList.remove('show');
+                    alertTemp.classList.remove('show');
+                    alertOk.classList.remove('show');
+
+                    if (sensorData.soil <= 1200) {
+                        alertSoil.classList.add('show');
+                        isProblemFound = true;
+                        terminalMessage = "UYARI: Toprak Kuru!";
+                    }
+                    if (sensorData.light <= 1200) {
+                        alertLight.classList.add('show');
+                        isProblemFound = true;
+                        terminalMessage = (terminalMessage === "Tüm koşullar ideal." ? "" : terminalMessage + " ") + "Işık Yetersiz!";
+                    }
+                    if (sensorData.temperature >= 30) {
+                        alertTemp.classList.add('show');
+                        isProblemFound = true;
+                        terminalMessage = (terminalMessage === "Tüm koşullar ideal." ? "" : terminalMessage + " ") + "Sıcaklık Yüksek!";
+                    }
+                    if (!isProblemFound) {
+                        alertOk.classList.add('show');
+                    }
+                    
+                    writeToTerminal(`<span style="color:#888">[${timeLabel}]</span> [SENSÖR] Işık:${sensorData.light}, Nem:${sensorData.soil}, Sıcaklık:${sensorData.temperature.toFixed(1)}, Hava:${sensorData.airQuality} || [DURUM] ${terminalMessage}`);
+                }
+                
+                writeToTerminal("ECO-S-ELNSOR Web Arayüzü v10.0 başlatılıyor...");
+                writeToTerminal("Firebase veritabanı dinleniyor...");
+            }
         });
-
-        function initializeDashboard() {
-            const lightValueEl = document.getElementById('light-value'), humidityValueEl = document.getElementById('humidity-value'), temperatureValueEl = document.getElementById('temperature-value'), airQualityValueEl = document.getElementById('air-quality-value'), terminalOutput = document.getElementById('terminal-output'), CHART_DATA_COUNT = 15;
-            const humidityLight = document.getElementById('humidity-light'), oxygenLight = document.getElementById('oxygen-light');
-            let chartInstances = {};
-
-            function createChart(ctx, color) { return new Chart(ctx, { type: 'line', data: { labels: [], datasets: [{ data: [], borderColor: color, borderWidth: 2.5, fill: true, backgroundColor: 'rgba(44, 62, 80, 0.1)', tension: 0.4, pointRadius: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } } }); }
-            chartInstances.light = createChart(document.getElementById('light-chart').getContext('2d'), '#f1c40f');
-            chartInstances.humidity = createChart(document.getElementById('humidity-chart').getContext('2d'), '#3498db');
-            chartInstances.temperature = createChart(document.getElementById('temperature-chart').getContext('2d'), '#e74c3c');
-            chartInstances.airQuality = createChart(document.getElementById('air-quality-chart').getContext('2d'), '#9b59b6');
-            function updateChart(chart, label, newData) { if(!chart) return; chart.data.labels.push(label); chart.data.datasets[0].data.push(newData); if (chart.data.labels.length > CHART_DATA_COUNT) { chart.data.labels.shift(); chart.data.datasets[0].data.shift(); } chart.update('none'); }
-            
-            const rainGardenVolumeEl = document.getElementById('rain-garden-volume');
-            const microalgaeVolumeEl = document.getElementById('microalgae-volume');
-            
-            rainGardenVolumeEl.textContent = '2.0 L';
-            microalgaeVolumeEl.textContent = '1.0 L';
-
-            function simulateSensorData() { return { light: Math.floor(Math.random() * 1000), humidity: Math.floor(Math.random() * 101), temperature: Math.floor(Math.random() * 45), airQuality: Math.floor(Math.random() * 1000) + 50 }; }
-            function writeToTerminal(message) { terminalOutput.innerHTML += message + '\n'; terminalOutput.scrollTop = terminalOutput.scrollHeight; }
-
-            const gauges = {
-                flood: { needle: document.getElementById('gauge-flood'), value: document.getElementById('value-flood'), text: document.getElementById('text-flood') },
-                drought: { needle: document.getElementById('gauge-drought'), value: document.getElementById('value-drought'), text: document.getElementById('text-drought') },
-                humidity: { needle: document.getElementById('gauge-humidity'), value: document.getElementById('value-humidity'), text: document.getElementById('text-humidity') },
-                oxygen: { needle: document.getElementById('gauge-oxygen'), value: document.getElementById('value-oxygen'), text: document.getElementById('text-oxygen') }
-            };
-            function updateGauge(gauge, value, text, color) {
-                if(!gauge.needle) return;
-                gauge.needle.style.transform = `rotate(${(value / 100) * 180 - 90}deg)`;
-                if(gauge.value.textContent.includes('%')) gauge.value.textContent = `${Math.round(value)}%`;
-                else gauge.value.textContent = value.toFixed(2) + '%';
-                gauge.text.textContent = text;
-                gauge.text.style.color = color;
-            }
-
-            function updateRiskGauges(weatherData) {
-                const isRaining = weatherData.rain > 0;
-                let floodRisk = (weatherData.rain * 50) + (weatherData.humidity * 0.5);
-                floodRisk = Math.min(floodRisk, 100);
-                let floodStatus = floodRisk < 40 ? {t: "Düşük", c: "var(--primary-color)"} : (floodRisk < 75 ? {t:"Orta", c:"var(--warning-color)"} : {t:"Yüksek", c:"var(--critical-color)"});
-                updateGauge(gauges.flood, floodRisk, floodStatus.t, floodStatus.c);
-
-                let droughtRisk = (100 - weatherData.humidity) * 0.8 + (isRaining ? 0 : 20);
-                droughtRisk = Math.min(droughtRisk, 100);
-                let droughtStatus = droughtRisk < 40 ? {t: "Düşük", c: "var(--primary-color)"} : (droughtRisk < 75 ? {t:"Orta", c:"var(--warning-color)"} : {t:"Yüksek", c:"var(--critical-color)"});
-                updateGauge(gauges.drought, droughtRisk, droughtStatus.t, droughtStatus.c);
-                
-                let humidityStatus = weatherData.humidity < 30 ? {t: "Çok Düşük", c: "var(--warning-color)"} : (weatherData.humidity < 60 ? {t:"İdeal", c:"var(--primary-color)"} : {t:"Yüksek", c:"var(--info-color)"});
-                updateGauge(gauges.humidity, weatherData.humidity, humidityStatus.t, humidityStatus.c);
-                
-                let oxygenLevel = 20.95 - (weatherData.aqi * 0.2); 
-                oxygenLevel = Math.max(19.5, Math.min(20.95, oxygenLevel));
-                let oxygenValue = ((oxygenLevel - 19.5) / (20.95 - 19.5)) * 100;
-                let oxygenStatus = oxygenLevel < 20.5 ? {t: "Düşük", c: "var(--warning-color)"} : {t:"Normal", c:"var(--primary-color)"};
-                updateGauge(gauges.oxygen, oxygenValue, oxygenStatus.t, oxygenStatus.c);
-                gauges.oxygen.value.textContent = oxygenLevel.toFixed(2) + '%';
-            }
-            
-            async function fetchAndProcessWeatherData(lat, lon) {
-                const conditions = [ { rain: 0 }, { rain: 0 }, { rain: 0.1 }, { rain: 0.2 }, { rain: 2.5 }, { rain: 10.0 } ];
-                const currentCondition = conditions[Math.floor(Math.random() * conditions.length)];
-                
-                const weatherData = {
-                    humidity: Math.floor(Math.random() * 50) + 45,
-                    rain: currentCondition.rain,
-                    aqi: Math.floor(Math.random() * 5) + 1
-                };
-                updateRiskGauges(weatherData);
-            }
-            
-            // GÜNCELLENDİ: "Status" bölümü için elementler
-            const waterStatusIcon = document.getElementById('water-status-icon');
-            const waterStatusText = document.getElementById('water-status-text');
-            const oxygenStatusIcon = document.getElementById('oxygen-status-icon');
-            const oxygenStatusText = document.getElementById('oxygen-status-text');
-
-            function updateStatusFeedback(sensorData) {
-                // Su Verimliliği Geri Bildirimi
-                if (sensorData.humidity >= 40 && sensorData.humidity <= 70) {
-                    waterStatusIcon.className = "fas fa-hand-holding-droplet status-ok";
-                    waterStatusText.textContent = "Toprak nem koşulları ideal, su kullanımı optimal düzeyde.";
-                } else if (sensorData.humidity >= 20 && sensorData.humidity <= 85) {
-                    waterStatusIcon.className = "fas fa-hand-holding-droplet status-warn";
-                    waterStatusText.textContent = "Toprak nemi sınırlarda, sulama gerekebilir.";
-                } else {
-                    waterStatusIcon.className = "fas fa-hand-holding-droplet status-crit";
-                    waterStatusText.textContent = "Kritik nem seviyesi! Acil sulama gerekli.";
-                }
-
-                // Oksijen Verimliliği Geri Bildirimi
-                if (sensorData.airQuality < 350) {
-                    oxygenStatusIcon.className = "fas fa-lungs status-ok";
-                    oxygenStatusText.textContent = "Oksijen üretimi yüksek verimlilikte.";
-                } else if (sensorData.airQuality < 700) {
-                    oxygenStatusIcon.className = "fas fa-lungs status-warn";
-                    oxygenStatusText.textContent = "Oksijen üretimi orta seviyede.";
-                } else {
-                    oxygenStatusIcon.className = "fas fa-lungs status-crit";
-                    oxygenStatusText.textContent = "Düşük oksijen verimliliği, sistem kontrol ediliyor.";
-                }
-            }
-
-
-            function updateAll(currentPos) {
-                const sensorData = simulateSensorData();
-                const now = new Date();
-                const timeLabel = `${now.getHours()}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
-                
-                lightValueEl.innerHTML = `${sensorData.light}<span class="unit">lux</span>`; updateChart(chartInstances.light, timeLabel, sensorData.light);
-                
-                humidityValueEl.innerHTML = `${sensorData.humidity}<span class="unit">%</span>`; updateChart(chartInstances.humidity, timeLabel, sensorData.humidity);
-                
-                temperatureValueEl.innerHTML = `${sensorData.temperature}<span class="unit">°C</span>`; updateChart(chartInstances.temperature, timeLabel, sensorData.temperature);
-                
-                airQualityValueEl.innerHTML = `${sensorData.airQuality}<span class="unit">PPM</span>`; updateChart(chartInstances.airQuality, timeLabel, sensorData.airQuality);
-                
-                updateStatusFeedback(sensorData); // Yeni geri bildirim fonksiyonunu çağır
-
-                writeToTerminal(`<span style="color:#888">[${timeLabel}]</span> Işık:${sensorData.light}, Nem:${sensorData.humidity}, Sıcaklık:${sensorData.temperature}, Hava Kalitesi:${sensorData.airQuality}, Durum: ${waterStatusText.textContent}`);
-                
-                if (currentPos) {
-                    fetchAndProcessWeatherData(currentPos.coords.latitude, currentPos.coords.longitude);
-                }
-            }
-            
-            const locationTitle = document.getElementById('weather-location-title');
-            function startApp(position) {
-                 setInterval(() => updateAll(position), 3000);
-                 updateAll(position);
-                 writeToTerminal("ECO-S-ELNSOR Mobil Terminal v7.0 başlatılıyor...");
-                 writeToTerminal("Sistem logları dinleniyor...");
-            }
-
-            function locationSuccess(pos) {
-                locationTitle.innerHTML = "Konumunuz İçin Risk Analizi <small>Veriler anlık olarak güncellenmektedir.</small>";
-                startApp(pos);
-            }
-            function locationError() {
-                locationTitle.innerHTML = "İstanbul, Başakşehir İçin Risk Analizi <small>Konum izni alınamadı, varsayılan konum kullanılıyor.</small>";
-                startApp(null);
-            }
-            
-            navigator.geolocation.getCurrentPosition(locationSuccess, locationError);
-        }
-        
-        initializeDashboard();
-    });
     </script>
 </body>
 </html>
