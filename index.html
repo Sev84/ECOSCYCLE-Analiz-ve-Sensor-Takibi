@@ -269,6 +269,7 @@
             // --- FIREBASE BAĞLANTISI ---
             let db, auth;
             try {
+                if(!firebaseConfig.apiKey || firebaseConfig.apiKey === "YOUR_API_KEY") throw new Error("Firebase config not found");
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
@@ -276,31 +277,24 @@
 
                 try {
                     if (initialAuthToken) {
-                        console.log("Attempting to sign in with custom token...");
                         await signInWithCustomToken(auth, initialAuthToken);
-                        console.log("Successfully signed in with custom token.");
                     } else {
-                        console.log("No custom token found, signing in anonymously...");
                         await signInAnonymously(auth);
-                        console.log("Successfully signed in anonymously.");
                     }
                 } catch (tokenError) {
-                    console.warn("Custom token sign-in failed:", tokenError.message);
-                    console.log("Falling back to anonymous sign-in...");
+                    console.warn("Auth token sign-in failed, falling back to anonymous:", tokenError.message);
                     await signInAnonymously(auth);
-                    console.log("Successfully signed in anonymously after fallback.");
                 }
-
+                
                 console.log("Firebase Auth successful. User:", auth.currentUser.uid);
-                initializeDashboard();
+                initializeDashboard(true); // Firebase modu
 
             } catch (error) {
                 console.error("Firebase Initialization Error:", error);
-                document.body.innerHTML = "Firebase bağlantısı kurulamadı. Lütfen konsolu kontrol edin.";
-                return;
+                initializeDashboard(false); // Simülasyon modu
             }
 
-            function initializeDashboard() {
+            function initializeDashboard(isFirebaseConnected) {
                 const lightValueEl = document.getElementById('light-value'), humidityValueEl = document.getElementById('humidity-value'), temperatureValueEl = document.getElementById('temperature-value'), airQualityValueEl = document.getElementById('air-quality-value'), terminalOutput = document.getElementById('terminal-output'), CHART_DATA_COUNT = 15;
                 const alertSoil = document.getElementById('alert-soil'), alertLight = document.getElementById('alert-light'), alertTemp = document.getElementById('alert-temp'), alertOk = document.getElementById('alert-ok');
                 let chartInstances = {};
@@ -319,25 +313,29 @@
 
                 function writeToTerminal(message) { terminalOutput.innerHTML += message + '\n'; terminalOutput.scrollTop = terminalOutput.scrollHeight; }
 
-                const sensorDataRef = doc(db, `artifacts/${appId}/public/data/device/live`);
-                onSnapshot(sensorDataRef, (doc) => {
-                    if (doc.exists()) {
-                        const sensorData = doc.data();
-                        console.log("Firestore'dan yeni veri:", sensorData);
-                        updateAll(sensorData);
-                    } else {
-                        console.log("Veri bulunamadı. Simülasyon modunda çalışılıyor.");
-                        writeToTerminal("[UYARI] Canlı veri akışı bulunamadı. Simülasyon verileri kullanılıyor.");
-                        // Canlı veri yoksa, simülasyonla devam et
-                        setInterval(() => {
-                             const simulatedData = { light: Math.floor(Math.random() * 4096), soil: Math.floor(Math.random() * 4096), temperature: (Math.random() * 20 + 15), airQuality: Math.floor(Math.random() * 4096) };
-                             updateAll(simulatedData);
-                        }, 3000);
-                    }
-                }, (error) => {
-                    console.error("Firestore dinleme hatası: ", error);
-                    writeToTerminal(`[HATA] Firestore dinlenemiyor: ${error.message}`);
-                });
+                if(isFirebaseConnected) {
+                    const sensorDataRef = doc(db, `artifacts/${appId}/public/data/device/live`);
+                    onSnapshot(sensorDataRef, (doc) => {
+                        if (doc.exists()) {
+                            const sensorData = doc.data();
+                            updateAll(sensorData);
+                        } else {
+                             writeToTerminal("[UYARI] Firestore'da veri bulunamadı. Lütfen cihazınızın veri gönderdiğinden emin olun.");
+                        }
+                    }, (error) => {
+                        console.error("Firestore dinleme hatası: ", error);
+                        writeToTerminal(`[HATA] Firestore dinlenemiyor: ${error.message}`);
+                    });
+                     writeToTerminal("ECO-S-ELNSOR Web Arayüzü v11.0 başlatılıyor...");
+                     writeToTerminal("Firebase veritabanı dinleniyor...");
+                } else {
+                    writeToTerminal("[UYARI] Firebase bağlantısı kurulamadı. Simülasyon modunda çalışılıyor.");
+                    setInterval(() => {
+                        const simulatedData = { light: Math.floor(Math.random() * 4096), soil: Math.floor(Math.random() * 4096), temperature: (Math.random() * 20 + 15), airQuality: Math.floor(Math.random() * 4096) };
+                        updateAll(simulatedData);
+                    }, 3000);
+                }
+
 
                 function updateAll(sensorData) {
                     if (!sensorData) return;
@@ -377,9 +375,6 @@
                     
                     writeToTerminal(`<span style="color:#888">[${timeLabel}]</span> [SENSÖR] Işık:${sensorData.light}, Nem:${sensorData.soil}, Sıcaklık:${sensorData.temperature.toFixed(1)}, Hava:${sensorData.airQuality} || [DURUM] ${terminalMessage}`);
                 }
-                
-                writeToTerminal("ECO-S-ELNSOR Web Arayüzü v10.0 başlatılıyor...");
-                writeToTerminal("Firebase veritabanı dinleniyor...");
             }
         });
     </script>
