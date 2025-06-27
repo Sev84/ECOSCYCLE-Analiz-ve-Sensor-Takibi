@@ -14,59 +14,75 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --primary-color: #2ecc71; --warning-color: #f39c12; --critical-color: #e74c3c;
-            --dark-bg: #1f2833; --light-bg: #2c3e50; --text-color: #ecf0f1;
-            --nav-bg: #2c3e50; --nav-text-color: #ffffff; --info-color: #3498db;
-            --cyan-glow: #00bcd4; --border-color: rgba(255, 255, 255, 0.1);
+            --primary-color: #27ae60; --warning-color: #f39c12; --critical-color: #e74c3c;
+            /* GÜNCELLENDİ: Açık tema renkleri */
+            --light-theme-bg: #f7fdf9; 
+            --dark-text: #34495e;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --card-shadow: rgba(0, 0, 0, 0.1);
+            --nav-bg: #ffffff; 
+            --nav-text-color: #34495e; 
+            --info-color: #3498db;
+            --border-color: rgba(0, 0, 0, 0.1);
         }
         *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body, html { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; height: 100%; overflow-x: hidden; background-color: var(--dark-bg); color: var(--text-color); }
+        body, html {
+            margin: 0; padding: 0; font-family: 'Poppins', sans-serif; height: 100%;
+            overflow-x: hidden; color: var(--dark-text);
+            /* GÜNCELLENDİ: Yeni dalgalı arkaplan */
+            background-color: #e6f9f0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,128L48,138.7C96,149,192,171,288,170.7C384,171,480,149,576,122.7C672,96,768,64,864,80C960,96,1056,160,1152,176C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: top;
+            background-size: 100% 400px;
+        }
 
-        .main-container { display: flex; flex-direction: column; height: 100vh; }
+        .main-container { display: flex; flex-direction: column; height: 100vh; background-color: transparent; }
 
         /* ÜST NAVİGASYON BARI */
         .top-nav {
             display: flex; align-items: center; padding: 0 30px;
             background-color: var(--nav-bg); border-bottom: 1px solid var(--border-color);
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            box-shadow: 0 2px 10px var(--card-shadow);
         }
         .logo-container { display: flex; align-items: center; gap: 15px; }
         .logo-container img { width: 45px; height: auto; }
         .logo-container h1 { font-size: 1.5em; margin: 0; color: var(--nav-text-color); }
         .nav-tabs { margin: 0 auto; }
-        .nav-tabs .nav-link { /* Değişti: tab-btn -> nav-link */
+        .nav-tabs .nav-link {
             background: none; border: none; color: var(--nav-text-color);
             padding: 20px 25px; font-size: 1em; cursor: pointer; text-decoration: none;
             position: relative; transition: color 0.3s; opacity: 0.7; display: inline-block;
         }
-        .nav-tabs .nav-link::after {
-            content: ''; position: absolute; bottom: 0; left: 50%;
-            width: 0; height: 3px; background-color: var(--primary-color);
-            transition: all 0.3s ease-in-out;
-        }
-        .nav-tabs .nav-link.active, .nav-tabs .nav-link:hover { color: white; opacity: 1; }
+        .nav-tabs .nav-link::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 3px; background-color: var(--primary-color); transition: all 0.3s ease-in-out; }
+        .nav-tabs .nav-link.active, .nav-tabs .nav-link:hover { color: var(--dark-text); opacity: 1; }
         .nav-tabs .nav-link.active::after { width: 100%; left: 0; }
         
         .top-nav-actions { display: flex; align-items: center; gap: 20px; }
         .action-btn { background: none; border: none; color: var(--nav-text-color); font-size: 1.5em; cursor: pointer; transition: color 0.3s; opacity: 0.8; }
-        .action-btn:hover { color: white; opacity: 1; }
+        .action-btn:hover { color: var(--primary-color); opacity: 1; }
 
         /* ANA İÇERİK ALANI */
-        .content-area {
-            padding: 30px;
-            padding-top: 100px; /* Nav bar yüksekliği kadar boşluk */
-        }
-        .content-section {
-            padding: 50px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
+        .content-area { padding: 30px; padding-top: 100px; }
+        .content-section { min-height: 90vh; padding: 50px 0; border-bottom: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: center; }
         .content-section:last-child { border-bottom: none; }
         
         .section-title { font-size: 2.5em; color: var(--primary-color); text-align: center; margin-bottom: 40px; }
-
+        
+        /* GÜNCELLENDİ: Overview Section Layout */
+        #overview { justify-content: center; }
+        .overview-layout { display: flex; align-items: center; gap: 50px; width: 100%; max-width: 1200px; margin: 0 auto; }
+        .overview-info { flex: 1.2; }
+        .overview-info .section-title { text-align: left; font-size: 3em; }
+        .overview-info p.subtitle { font-size: 1.2em; opacity: 0.7; margin-top: -30px; margin-bottom: 30px; }
+        .overview-image { flex: 1; text-align: center; }
+        .overview-image img { max-width: 100%; height: auto; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        .overview-info .card { background-color: var(--card-bg); backdrop-filter: blur(5px); }
+        
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
-        .card { background-color: var(--light-bg); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
+        .card { background-color: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px var(--card-shadow); backdrop-filter: blur(5px); }
         .card-header { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.2em; font-weight: 600; }
         .card-header i { margin-right: 15px; width: 25px; text-align: center; color: var(--primary-color); }
         .sensor-value { font-size: 2.5em; font-weight: 700; text-align: center; }
@@ -77,41 +93,35 @@
         .info-page h3 { color: var(--info-color); margin-top: 30px; }
         .info-page p { line-height: 1.7; text-align: justify; opacity: 0.9; }
         .info-page ul { list-style-type: none; padding-left: 0; }
-        .info-page ul li { background-color: var(--dark-bg); margin-bottom: 10px; padding: 15px; border-left: 4px solid var(--primary-color); border-radius: 5px; }
+        .info-page ul li { background-color: rgba(255,255,255,0.5); margin-bottom: 10px; padding: 15px; border-left: 4px solid var(--primary-color); border-radius: 5px; }
         .info-images { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
-        .info-images img { width: 100%; max-width: 280px; height: auto; border-radius: 10px; object-fit: cover; }
+        .info-images img { width: 100%; max-width: 280px; height: 200px; border-radius: 10px; object-fit: cover; }
 
-        /* BLUETOOTH BAĞLANTI EKRANI */
-        #bluetooth-connecting-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.85); display: none; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 2000;
-        }
+        /* BLUETOOTH & TERMINAL */
+        #bluetooth-connecting-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; }
         #bluetooth-connecting-overlay.active { display: flex; }
         .bt-spinner { font-size: 5em; color: var(--info-color); animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } }
-        #bluetooth-connecting-overlay p { font-size: 1.5em; margin-top: 20px; }
-        
-        /* MOBİL TERMİNAL EKRANI (Artık bir bölüm) */
+        #bluetooth-connecting-overlay p { font-size: 1.5em; margin-top: 20px; color: white; }
         #terminal { background-color: #1a1a1a; padding: 40px 20px; border-radius: 15px; margin-top: 20px; }
         .terminal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 10px; }
         .terminal-title { font-size: 1.5em; color: var(--primary-color); text-shadow: 0 0 5px var(--primary-color); }
         #terminal-output { height: 400px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; font-family: 'Source Code Pro', monospace; color: #00ff00; }
-        #terminal-output::-webkit-scrollbar { width: 8px; }
-        #terminal-output::-webkit-scrollbar-track { background: #222; }
-        #terminal-output::-webkit-scrollbar-thumb { background: var(--primary-color); }
+        #terminal-output::-webkit-scrollbar { width: 8px; } #terminal-output::-webkit-scrollbar-track { background: #222; } #terminal-output::-webkit-scrollbar-thumb { background: var(--primary-color); }
 
-        /* YUKARI ÇIK BUTONU */
-        #back-to-top-btn {
-            position: fixed; bottom: 30px; right: 30px;
-            width: 50px; height: 50px; background-color: var(--primary-color);
-            color: white; border: none; border-radius: 50%;
-            font-size: 1.5em; cursor: pointer;
-            display: none; justify-content: center; align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: opacity 0.3s, transform 0.3s;
-        }
+        #back-to-top-btn { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background-color: var(--primary-color); color: white; border: none; border-radius: 50%; font-size: 1.5em; cursor: pointer; display: none; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: opacity 0.3s, transform 0.3s; z-index: 999; }
         #back-to-top-btn.visible { display: flex; opacity: 1; }
+        
+        @media (max-width: 1024px) {
+            .overview-layout { flex-direction: column; text-align: center; }
+            .overview-info .section-title { text-align: center; }
+            .overview-image { margin-top: 30px; }
+        }
+        @media (max-width: 768px) {
+            .top-nav { flex-direction: column; padding: 10px; height: auto; }
+            .nav-tabs { width: 100%; overflow-x: auto; }
+            .content-area { padding-top: 150px; }
+        }
     </style>
 </head>
 <body>
@@ -124,7 +134,7 @@
             </div>
             <nav class="nav-tabs">
                 <a href="#overview" class="nav-link active">Genel Bakış</a>
-                <a href="#graphs" class="nav-link">Anlık Grafikler</a>
+                <a href="#graphs" class="nav-link">Anlık Veri Takibi</a>
                 <a href="#how-to" class="nav-link">Nasıl Kullanılır?</a>
                 <a href="#about" class="nav-link">Hakkımızda</a>
             </nav>
@@ -136,22 +146,24 @@
         <!-- ANA İÇERİK -->
         <main class="content-area">
             <section id="overview" class="content-section">
-                <h2 class="section-title">Genel Bakış</h2>
-                 <div class="grid-container" style="grid-template-columns: 2fr 1fr; align-items: center;">
-                    <div class="card">
-                        <div class="card-header"><i class="fa-solid fa-circle-info"></i><span>Projeye Hoş Geldiniz</span></div>
-                        <p>ECOSCYCLE, şehirlerimizi iklim değişikliğine karşı daha dirençli hale getirmeyi amaçlayan akıllı bir su ve hava yönetimi sistemidir. Bu panel üzerinden sistemin anlık verilerini takip edebilir, analizleri inceleyebilirsiniz.</p>
+                <div class="overview-layout">
+                    <div class="overview-info">
+                        <h2 class="section-title">Akıllı Şehirler İçin Ekolojik Çözümler</h2>
+                        <p class="subtitle">ECOSCYCLE, şehirlerimizi iklim değişikliğine karşı daha dirençli hale getirmeyi amaçlayan akıllı bir su ve hava yönetimi sistemidir. Bu panel üzerinden sistemin anlık verilerini takip edebilir, analizleri inceleyebilirsiniz.</p>
+                        <div class="card">
+                            <div class="card-header"><i class="fa-solid fa-water"></i><span>Su Hacmi Bilgisi</span></div>
+                            <p style="text-align:center;">Temel birim dönüşümü:</p>
+                            <div class="sensor-value">1L = 0.001 m³</div>
+                        </div>
                     </div>
-                     <div class="card">
-                        <div class="card-header"><i class="fa-solid fa-water"></i><span>Su Hacmi Bilgisi</span></div>
-                        <p>Temel birim dönüşümü:</p>
-                        <div class="sensor-value">1L = 0.001 m³</div>
+                    <div class="overview-image">
+                        <img src="https://i.imgur.com/S8dFvT9.png" alt="Mobil Arayüz Görünümü">
                     </div>
                 </div>
             </section>
             
             <section id="graphs" class="content-section">
-                <h2 class="section-title">Anlık Grafikler</h2>
+                <h2 class="section-title">Anlık Veri Takibi</h2>
                 <div class="grid-container">
                     <div class="card"><div class="card-header"><i class="fas fa-sun"></i><span>Işık Şiddeti</span></div><div class="card-body"><div class="sensor-value" id="light-value">--</div><div class="chart-container"><canvas id="light-chart"></canvas></div></div></div>
                     <div class="card"><div class="card-header"><i class="fas fa-tint"></i><span>Toprak Nemi</span></div><div class="card-body"><div class="sensor-value" id="humidity-value">--</div><div class="chart-container"><canvas id="humidity-chart"></canvas></div></div></div>
@@ -167,15 +179,15 @@
                 <h3>Uygulamanın Kullanımı</h3>
                 <ul>
                     <li><b>Genel Bakış:</b> Sistem hakkında temel bilgileri ve önemli metrikleri sunar.</li>
-                    <li><b>Anlık Grafikler:</b> Işık, nem, sıcaklık ve hava kalitesi sensörlerinden gelen verilerin zaman içindeki değişimini canlı olarak izleyebilirsiniz.</li>
+                    <li><b>Anlık Veri Takibi:</b> Işık, nem, sıcaklık ve hava kalitesi sensörlerinden gelen verilerin zaman içindeki değişimini canlı olarak izleyebilirsiniz.</li>
                     <li><b>Bluetooth Terminal:</b> Üst menüdeki Bluetooth simgesine tıklayarak, sisteme ait ham verileri ve log kayıtlarını görebileceğiniz mobil terminal bölümüne ulaşırsınız.</li>
                 </ul>
                 <h3>Biyoreaktörler ve Mikroalgler</h3>
                 <p>Sistemimizin kalbinde, oksijen üreten mikroalgleri barındıran biyoreaktörler yer alır. Mikroalgler, fotosentez yoluyla havadaki karbondioksiti tüketir ve yerine temiz oksijen salar. Bu, onları kentsel hava kalitesini iyileştirmek için güçlü bir doğal araca dönüştürür.</p>
                 <div class="info-images">
-                    <img src="https://i.imgur.com/Wp2b8hU.jpg" alt="Biyoreaktördeki Mikroalgler">
-                    <img src="https://i.imgur.com/9nOE48c.jpg" alt="Yağmur Bahçesi Çalışma Prensibi">
-                    <img src="https://i.imgur.com/gK98tA4.jpg" alt="Açık Hava Biyoreaktörleri">
+                    <img src="https://images.unsplash.com/photo-1614398399534-a6493b5e4132?q=80&w=870&auto=format&fit=crop" alt="Biyoreaktördeki Mikroalgler">
+                    <img src="https://images.unsplash.com/photo-1599557422934-043586541f30?q=80&w=870&auto=format&fit=crop" alt="Yağmur Bahçesi Çalışma Prensibi">
+                    <img src="https://images.unsplash.com/photo-1633450940383-758a03883a99?q=80&w=774&auto=format&fit=crop" alt="Açık Hava Biyoreaktörleri">
                 </div>
             </section>
 
@@ -218,43 +230,37 @@
         const backToTopBtn = document.getElementById('back-to-top-btn');
         const mainContentArea = document.querySelector('.main-container');
 
-        // Navigasyon linklerine tıklandığında aktif sınıfı yönetme
         navLinks.forEach(link => {
             link.addEventListener('click', e => {
                 e.preventDefault();
-                document.querySelector(link.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
             });
         });
 
-        // Kaydırma olayını dinleyerek aktif sekmeyi belirleme
         function onScroll() {
-            let currentSection = '';
+            let currentSectionId = '';
             contentSections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 if (mainContentArea.scrollTop >= sectionTop - 150) {
-                    currentSection = section.getAttribute('id');
+                    currentSectionId = section.getAttribute('id');
                 }
             });
 
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentSection}`) {
+                if (link.getAttribute('href') === `#${currentSectionId}`) {
                     link.classList.add('active');
                 }
             });
             
-             // Yukarı Çık butonu görünürlüğü
             if (mainContentArea.scrollTop > 300) {
-                backToTopBtn.classList.add('visible');
+                backToTopBtn.style.display = 'flex';
             } else {
-                backToTopBtn.classList.remove('visible');
+                backToTopBtn.style.display = 'none';
             }
         }
         mainContentArea.addEventListener('scroll', onScroll);
 
-        // Bluetooth Terminal Akışı
         btTerminalBtn.addEventListener('click', () => {
             btConnectingOverlay.classList.add('active');
             setTimeout(() => {
@@ -263,7 +269,6 @@
             }, 2500);
         });
 
-        // Dashboard'u başlatan ana fonksiyon
         function initializeDashboard() {
             const lightValueEl = document.getElementById('light-value');
             const humidityValueEl = document.getElementById('humidity-value');
@@ -284,10 +289,7 @@
                 if(!chart) return;
                 chart.data.labels.push(label);
                 chart.data.datasets[0].data.push(newData);
-                if (chart.data.labels.length > CHART_DATA_COUNT) {
-                    chart.data.labels.shift();
-                    chart.data.datasets[0].data.shift();
-                }
+                if (chart.data.labels.length > CHART_DATA_COUNT) { chart.data.labels.shift(); chart.data.datasets[0].data.shift(); }
                 chart.update('none');
             }
 
