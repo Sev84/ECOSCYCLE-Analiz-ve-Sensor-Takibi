@@ -15,21 +15,11 @@
     <!-- Tone.js for Sound Effects -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
     <style>
-
-        </head>
-
-<body class="antialiased">
-
-    <header class="bg-white/95 backdrop-blur-sm sticky top-0 z-50 shadow-md">
-        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="#hero" class="flex items-center">
-                <img src="logo1111.png" alt="ECO-S-CYCLE Proje Logosu" class="h-12 w-auto" onerror="this.onerror=null; this.src='https://placehold.co/150x50/FFFFFF/073B4C?text=ECO-S-CYCLE';">
-        
         :root {
-            --primary-color: #27ae60; --warning-color: #f39c12; --critical-color: #e74c3c;
+            --primary-color: #27ae60; --warning-color: #f39c12; --critical-color: #e74c3c; --info-color-blue: #3498db;
             --light-theme-bg: #f7fdf9; --dark-text: #34495e; --card-bg: rgba(255, 255, 255, 0.75);
             --card-shadow: rgba(0, 0, 0, 0.08); --nav-bg: #ffffff; --nav-text-color: #34495e; 
-            --info-color: #3498db; --border-color: rgba(0, 0, 0, 0.1);
+            --border-color: rgba(0, 0, 0, 0.1);
         }
         *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -68,10 +58,10 @@
         .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; font-size: 1.2em; font-weight: 600; }
         .card-header .title { display: flex; align-items: center; }
         .card-header .title i { margin-right: 15px; width: 25px; text-align: center; color: var(--primary-color); }
-        .efficiency-light { width: 18px; height: 18px; border-radius: 50%; transition: background-color 0.5s, box-shadow 0.5s; }
-        .efficiency-light.status-ok { background-color: var(--primary-color); box-shadow: 0 0 10px var(--primary-color); }
-        .efficiency-light.status-warn { background-color: var(--warning-color); box-shadow: 0 0 10px var(--warning-color); }
-        .efficiency-light.status-crit { background-color: var(--critical-color); box-shadow: 0 0 10px var(--critical-color); }
+        .efficiency-light { width: 18px; height: 18px; border-radius: 50%; background-color: #ccc; transition: background-color 0.5s, box-shadow 0.5s; }
+        .efficiency-light.red { background-color: var(--critical-color); box-shadow: 0 0 10px var(--critical-color); }
+        .efficiency-light.yellow { background-color: var(--warning-color); box-shadow: 0 0 10px var(--warning-color); }
+        .efficiency-light.blue { background-color: var(--info-color); box-shadow: 0 0 10px var(--info-color); }
         .sensor-value { font-size: 2.5em; font-weight: 700; text-align: center; }
         .sensor-value .unit { font-size: 0.5em; font-weight: 400; margin-left: 5px; }
         .chart-container { position: relative; height: 120px; margin-top: 20px; }
@@ -85,21 +75,6 @@
         .water-volume-card { display: flex; justify-content: space-around; text-align: center;}
         .volume-item p { margin: 0; opacity: 0.7;}
         .volume-item .sensor-value { font-size: 2em; }
-        .status-card { display: flex; align-items: center; gap: 20px;}
-        .status-card i { font-size: 2.5em; transition: color 0.5s; }
-        .status-card p { margin: 0; font-size: 1.1em; }
-        .status-ok { color: var(--primary-color); }
-        .status-warn { color: var(--warning-color); }
-        .status-crit { color: var(--critical-color); }
-        .risk-gauges-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; align-items: stretch; margin-top: 30px; }
-        .gauge-card { text-align: center; padding: 20px; }
-        .gauge-container { position: relative; width: 180px; height: 90px; margin: 20px auto 0 auto; overflow: hidden; }
-        .gauge-semi-circle { position: absolute; top: 0; left: 0; width: 180px; height: 180px; border: 20px solid #eee; border-radius: 50%; border-bottom-color: transparent; border-right-color: transparent; transform: rotate(-45deg); }
-        .gauge-mask { position: absolute; top: 0; left: 0; width: 180px; height: 90px; background: var(--card-bg); }
-        .gauge-needle { position: absolute; bottom: 0; left: 50%; width: 2px; height: 90px; background: var(--dark-text); transform-origin: bottom center; transition: transform 0.5s ease; }
-        .gauge-value { font-size: 2em; font-weight: 700; margin-top: -50px; z-index: 1; position: relative; }
-        .gauge-text { font-size: 1em; opacity: 0.8; z-index: 1; position: relative; }
-        .gauge-card .card-header { justify-content: center; font-size: 1.1em;}
         #bluetooth-connecting-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; }
         #bluetooth-connecting-overlay.active { display: flex; }
         .bt-spinner { font-size: 5em; color: var(--info-color); animation: pulse 1.5s infinite; }
@@ -124,7 +99,8 @@
         .weather-table th { background-color: rgba(0,0,0,0.05); font-weight: 600;}
         .weather-table td:first-child { text-align: left; font-weight: 500; }
         .weather-table i { font-size: 1.5em; margin-bottom: 5px; display: block;}
-
+        .api-note { font-size: 0.8em; text-align: center; margin-top: 15px; opacity: 0.7; }
+        
         @media (max-width: 1024px) { .overview-layout { flex-direction: column; text-align: center; } .overview-info .section-title { text-align: center; } .overview-image { margin-top: 30px; } }
         @media (max-width: 768px) { .top-nav { flex-direction: column; padding: 10px; height: auto; } .nav-tabs { width: 100%; overflow-x: auto; } .content-area { padding-top: 150px; } }
     </style>
@@ -139,7 +115,7 @@
             <nav class="nav-tabs">
                 <a href="#overview" class="nav-link active">Genel Bakış</a>
                 <a href="#stats" class="nav-link">İstatistikler</a>
-                <a href="#graphs" class="nav-link">Anlık Veri Takibi</a>
+                <a href="#graphs" class="nav-link">Anlık Grafikler</a>
                 <a href="#weather" class="nav-link">Canlı Hava Durumu</a>
                 <a href="#how-to" class="nav-link">Nasıl Kullanılır?</a>
             </nav>
@@ -174,7 +150,7 @@
                 </div>
             </section>
             
-             <section id="stats" class="content-section">
+            <section id="stats" class="content-section">
                 <h2 class="section-title">Verimlilik ve İstatistikler</h2>
                 <div class="grid-container" style="grid-template-columns: 1fr 1fr;">
                     <div class="card">
@@ -203,9 +179,9 @@
             <section id="graphs" class="content-section">
                 <h2 class="section-title">Anlık Veri Takibi</h2>
                 <div class="grid-container">
-                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-sun"></i><span>Işık Şiddeti</span></div></div><div class="card-body"><div class="sensor-value" id="light-value">--</div><div class="chart-container"><canvas id="light-chart"></canvas></div></div></div>
+                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-sun"></i><span>Işık Şiddeti</span></div><div id="light-light" class="efficiency-light"></div></div><div class="card-body"><div class="sensor-value" id="light-value">--</div><div class="chart-container"><canvas id="light-chart"></canvas></div></div></div>
                     <div class="card"><div class="card-header"><div class="title"><i class="fas fa-tint"></i><span>Yağmur Bahçesi Su Nemi</span></div><div id="humidity-light" class="efficiency-light"></div></div><div class="card-body"><div class="sensor-value" id="humidity-value">--</div><div class="chart-container"><canvas id="humidity-chart"></canvas></div></div></div>
-                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-thermometer-half"></i><span>Ortam Sıcaklığı</span></div></div><div class="card-body"><div class="sensor-value" id="temperature-value">--</div><div class="chart-container"><canvas id="temperature-chart"></canvas></div></div></div>
+                    <div class="card"><div class="card-header"><div class="title"><i class="fas fa-thermometer-half"></i><span>Ortam Sıcaklığı</span></div><div id="temp-light" class="efficiency-light"></div></div><div class="card-body"><div class="sensor-value" id="temperature-value">--</div><div class="chart-container"><canvas id="temperature-chart"></canvas></div></div></div>
                     <div class="card"><div class="card-header"><div class="title"><i class="fas fa-wind"></i><span>Oksijen Verimliliği</span></div><div id="oxygen-light" class="efficiency-light"></div></div><div class="card-body"><div class="sensor-value" id="air-quality-value">--</div><div class="chart-container"><canvas id="air-quality-chart"></canvas></div></div></div>
                 </div>
             </section>
@@ -227,6 +203,7 @@
                             <!-- Hava durumu verileri buraya eklenecek -->
                         </tbody>
                     </table>
+                     <p class="api-note">Hava durumu verileri OpenWeatherMap tarafından sağlanmaktadır.</p>
                 </div>
             </section>
 
