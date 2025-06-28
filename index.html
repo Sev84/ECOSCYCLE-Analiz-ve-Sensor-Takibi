@@ -18,31 +18,31 @@
         :root {
             --primary-color: #2ecc71;
             --secondary-color: #3498db;
-            --dark-bg: #073B4C;
+            --dark-bg: #073B4C; /* Koyu Mavi */
             --card-bg: rgba(17, 47, 65, 0.7);
             --text-color: #f1f1f1;
             --nav-text-color: #f1f1f1;
             --border-color: rgba(255, 255, 255, 0.1);
             --shadow-color: rgba(0, 0, 0, 0.2);
-            --green-glow: rgba(46, 204, 113, 0.5);
-            --red-glow: rgba(231, 76, 60, 0.5);
-            --yellow-glow: rgba(243, 156, 18, 0.5);
-            --blue-glow: rgba(52, 152, 219, 0.5);
+            --warning-color: #f39c12;
+            --critical-color: #e74c3c;
+            --info-color-blue: #3498db;
         }
         *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body, html {
             margin: 0; padding: 0; font-family: 'Poppins', sans-serif; height: 100%;
+            overflow-y: scroll;
             overflow-x: hidden; color: var(--text-color); 
             background-color: var(--dark-bg);
             background-image: linear-gradient(rgba(7, 59, 76, 0.8), rgba(7, 59, 76, 0.9)), url('https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2070&auto=format&fit=crop');
             background-attachment: fixed;
             background-size: cover;
         }
-        .main-container { display: flex; flex-direction: column; height: 100vh; }
+        .main-container { display: flex; flex-direction: column; min-height: 100vh; }
         .top-nav { display: flex; align-items: center; padding: 0 30px; background-color: rgba(17, 47, 65, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 10px var(--shadow-color); }
         .logo-container { display: flex; align-items: center; gap: 15px; }
-        .logo-container img { height: 50px; width: auto; }
+        .logo-container .svg-logo { width: 50px; height: auto; }
         .logo-container h1 { font-size: 1.5em; margin: 0; color: var(--nav-text-color); }
         .nav-tabs { margin: 0 auto; overflow-x: auto; white-space: nowrap;}
         .nav-tabs .nav-link { background: none; border: none; color: var(--nav-text-color); padding: 20px 25px; font-size: 1em; cursor: pointer; text-decoration: none; position: relative; transition: color 0.3s, opacity 0.3s; opacity: 0.7; display: inline-block; }
@@ -69,9 +69,9 @@
         .card-header .title { display: flex; align-items: center; }
         .card-header .title i { margin-right: 15px; width: 25px; text-align: center; color: var(--primary-color); }
         .efficiency-light { width: 18px; height: 18px; border-radius: 50%; background-color: #555; transition: background-color 0.5s, box-shadow 0.5s; border: 1px solid rgba(255,255,255,0.2); }
-        .efficiency-light.red { background-color: var(--critical-color); box-shadow: 0 0 10px var(--red-glow); }
-        .efficiency-light.yellow { background-color: var(--warning-color); box-shadow: 0 0 10px var(--yellow-glow); }
-        .efficiency-light.blue { background-color: var(--info-color); box-shadow: 0 0 10px var(--blue-glow); }
+        .efficiency-light.red { background-color: var(--critical-color); box-shadow: 0 0 10px var(--critical-color); }
+        .efficiency-light.yellow { background-color: var(--warning-color); box-shadow: 0 0 10px var(--warning-color); }
+        .efficiency-light.blue { background-color: var(--info-color-blue); box-shadow: 0 0 10px var(--info-color-blue); }
         .sensor-value { font-size: 2.5em; font-weight: 700; text-align: center; }
         .sensor-value .unit { font-size: 0.5em; font-weight: 400; margin-left: 5px; }
         .chart-container { position: relative; height: 120px; margin-top: 20px; }
@@ -84,6 +84,12 @@
         .water-volume-card { display: flex; justify-content: space-around; text-align: center;}
         .volume-item p { margin: 0; opacity: 0.8;}
         .volume-item .sensor-value { font-size: 2em; }
+        .status-card { display: flex; align-items: center; gap: 20px;}
+        .status-card i { font-size: 2.5em; transition: color 0.5s; flex-shrink: 0; }
+        .status-card p { margin: 0; font-size: 1.1em; }
+        .status-ok { color: var(--primary-color); }
+        .status-warn { color: var(--warning-color); }
+        .status-crit { color: var(--critical-color); }
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.3s; }
         .modal-overlay.active { display: flex; opacity: 1; }
         .modal-content { display: flex; gap: 25px; background-color: var(--dark-bg); color: var(--text-color); padding: 40px; border-radius: 15px; width: 90%; max-width: 800px; max-height: 80vh; position: relative; transform: scale(0.9); transition: transform 0.3s; border: 1px solid var(--border-color);}
@@ -121,8 +127,9 @@
             </div>
             <nav class="nav-tabs">
                 <a href="#overview" class="nav-link active">Genel Bakış</a>
+                <a href="#status" class="nav-link">Sistem Durumu</a>
                 <a href="#stats" class="nav-link">İstatistikler</a>
-                <a href="#graphs" class="nav-link">Anlık Veri Takibi</a>
+                <a href="#graphs" class="nav-link">Anlık Grafikler</a>
                 <a href="#weather" class="nav-link">Canlı Hava Durumu</a>
                 <a href="#how-to" class="nav-link">Nasıl Kullanılır?</a>
                 <a href="#terminal" class="nav-link">Terminal</a>
@@ -158,7 +165,7 @@
                 </div>
             </section>
             
-             <section id="status" class="content-section">
+            <section id="status" class="content-section">
                 <h2 class="section-title">Sistem Durumu ve Verimlilik</h2>
                  <div class="grid-container" style="grid-template-columns: 1fr 1fr;">
                     <div class="card">
@@ -213,27 +220,6 @@
                     <div class="card"><div class="card-header"><div class="title"><i class="fas fa-wind"></i><span>Hava Kalitesi</span></div><div id="oxygen-light" class="efficiency-light"></div></div><div class="card-body"><div class="sensor-value" id="air-quality-value">--</div><div class="chart-container"><canvas id="air-quality-chart"></canvas></div></div></div>
                 </div>
             </section>
-
-            <section id="weather" class="content-section">
-                <h2 class="section-title">Türkiye Canlı Hava Durumu</h2>
-                <div class="card">
-                    <table class="weather-table" id="weather-table">
-                        <thead>
-                            <tr>
-                                <th>Şehir</th>
-                                <th>Durum</th>
-                                <th>Sıcaklık</th>
-                                <th>Nem</th>
-                                <th>Rüzgar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Hava durumu verileri buraya eklenecek -->
-                        </tbody>
-                    </table>
-                     <p class="api-note">Hava durumu verileri OpenWeatherMap tarafından sağlanmaktadır.</p>
-                </div>
-            </section>
             
             <section id="how-to" class="content-section info-page">
                 <h2 class="section-title">Nasıl Kullanılır?</h2>
@@ -257,6 +243,27 @@
                     <li><b>Akıllı ve Otomatik Kontrol Sağlamak:</b> IoT sensörleri ile toprak nemi, su akışı ve hava kalitesi gibi kritik verileri anlık olarak takip edip, sistemi en verimli şekilde otomatik olarak yönetmek.</li>
                     <li><b>Yeşil Altyapıyı Güçlendirmek:</b> Kentsel biyoçeşitliliği korumak, şehirlerin ekolojik direncini artırmak ve doğayla uyumlu, sürdürülebilir kalkınma hedeflerine ulaşmayı teşvik etmek.</li>
                 </ul>
+            </section>
+
+             <section id="weather" class="content-section">
+                <h2 class="section-title">Türkiye Canlı Hava Durumu</h2>
+                <div class="card">
+                    <table class="weather-table" id="weather-table">
+                        <thead>
+                            <tr>
+                                <th>Şehir</th>
+                                <th>Durum</th>
+                                <th>Sıcaklık</th>
+                                <th>Nem</th>
+                                <th>Rüzgar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Hava durumu verileri buraya eklenecek -->
+                        </tbody>
+                    </table>
+                     <p class="api-note">Hava durumu verileri OpenWeatherMap tarafından sağlanmaktadır.</p>
+                </div>
             </section>
             
             <section id="terminal" class="content-section">
@@ -409,9 +416,12 @@
             const temperatureValueEl = document.getElementById('temperature-value');
             const airQualityValueEl = document.getElementById('air-quality-value');
             const lightLight = document.getElementById('light-light');
-            const humidityLight = document.getElementById('humidity-light');
             const tempLight = document.getElementById('temp-light');
             const oxygenLight = document.getElementById('oxygen-light');
+            const waterStatusIcon = document.getElementById('water-status-icon');
+            const waterStatusText = document.getElementById('water-status-text');
+            const oxygenStatusIcon = document.getElementById('oxygen-status-icon');
+            const oxygenStatusText = document.getElementById('oxygen-status-text');
 
             let chartInstances = {};
             function createChart(ctx, color) { return new Chart(ctx, { type: 'line', data: { labels: [], datasets: [{ data: [], borderColor: color, borderWidth: 2.5, fill: true, backgroundColor: 'rgba(44, 62, 80, 0.1)', tension: 0.4, pointRadius: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } } }); }
@@ -469,27 +479,17 @@
                 const timeLabel = `${now.getHours()}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
                 
                 lightValueEl.innerHTML = `${sensorData.light}`; updateChart(chartInstances.light, timeLabel, sensorData.light);
-                if (sensorData.light <= 300) { lightLight.className = "efficiency-light red"; alertSound.triggerAttackRelease("C4", "8n"); } else { lightLight.className = "efficiency-light"; }
+                if (sensorData.light <= 300) { if(!lightLight.classList.contains('red')) alertSound.triggerAttackRelease("C4", "8n"); lightLight.className = "efficiency-light red"; } else { lightLight.className = "efficiency-light"; }
                 
                 humidityValueEl.innerHTML = `${sensorData.soil}`; updateChart(chartInstances.humidity, timeLabel, sensorData.soil);
-                let humidityStatus = 'status-crit';
-                if(sensorData.soil > 2000) { humidityStatus = 'status-ok'; }
-                else if(sensorData.soil > 1200) { humidityStatus = 'status-warn'; }
-                if(humidityLight) humidityLight.className = `efficiency-light ${humidityStatus}`;
-
+                
                 temperatureValueEl.innerHTML = `${sensorData.temperature.toFixed(1)}<span class="unit">°C</span>`; updateChart(chartInstances.temperature, timeLabel, sensorData.temperature);
-                if (sensorData.temperature >= 30) { tempLight.className = "efficiency-light yellow"; alertSound.triggerAttackRelease("E4", "8n"); } else { tempLight.className = "efficiency-light"; }
+                if (sensorData.temperature >= 30) { if(!tempLight.classList.contains('yellow')) alertSound.triggerAttackRelease("E4", "8n"); tempLight.className = "efficiency-light yellow"; } else { tempLight.className = "efficiency-light"; }
                 
                 airQualityValueEl.innerHTML = `${sensorData.airQuality}<span class="unit">PPM</span>`; updateChart(chartInstances.airQuality, timeLabel, sensorData.airQuality);
-                if (sensorData.airQuality < 700) { oxygenLight.className = "efficiency-light blue"; } else { oxygenLight.className = "efficiency-light"; }
+                if (sensorData.airQuality < 700) { if(!oxygenLight.classList.contains('blue')) clickSound.triggerAttackRelease("A5", "8n"); oxygenLight.className = "efficiency-light blue"; } else { oxygenLight.className = "efficiency-light"; }
 
-                 const waterStatusIcon = document.getElementById('water-status-icon');
-                const waterStatusText = document.getElementById('water-status-text');
-                const oxygenStatusIcon = document.getElementById('oxygen-status-icon');
-                const oxygenStatusText = document.getElementById('oxygen-status-text');
-
-                // Su Verimliliği
-                if (sensorData.soil > 2000) {
+                 if (sensorData.soil > 2000) {
                     waterStatusIcon.className = "fas fa-hand-holding-droplet status-ok";
                     waterStatusText.textContent = "Su verimliliği optimal, toprak nemi ideal seviyede.";
                 } else if (sensorData.soil > 1200) {
@@ -500,7 +500,6 @@
                     waterStatusText.textContent = "Kritik nem seviyesi! Acil sulama gerekli.";
                 }
 
-                // Oksijen Verimliliği
                 if (sensorData.airQuality > 1500) {
                     oxygenStatusIcon.className = "fas fa-lungs status-crit";
                     oxygenStatusText.textContent = "Düşük oksijen verimliliği.";
@@ -514,7 +513,6 @@
 
                 writeToTerminal(`<span style="color:#888">[${timeLabel}]</span> [DURUM] ${waterStatusText.textContent}, ${oxygenStatusText.textContent}`);
             }
-            
             
             setInterval(() => {
                 const simulatedData = { light: Math.floor(Math.random() * 1024), soil: Math.floor(Math.random() * 4096), temperature: (Math.random() * 20 + 15), airQuality: Math.floor(Math.random() * 2000) };
